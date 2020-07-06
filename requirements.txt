@@ -17,7 +17,7 @@ django-suit==0.2.12
 django-ckeditor==4.4.7
 django-tagging==0.3.4
 django.js==0.8.0
-djangorestframework==3.0.2
+djangorestframework==3.9.1
 django-rest-swagger==0.2.7
 django-configurations==0.8
 django-cors-headers==1.0.0
