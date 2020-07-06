@@ -1,0 +1,159 @@
+{% extends 'base/section.html' %}
+{% load staticfiles %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}
+	{{block.super}}
+
+	{% breadcrumb "MyEGUIDE" "myeguide" %}
+
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+	{% if elections %}
+		<section class="box">
+			<a href="{% url 'editprofile'%}">Edit Profile</a> | <a href="{% url 'account_change_password' %}">Change Password</a>
+		</section>
+		<!-- User Profile -->
+	    <section class="box country-profile tab-container">
+            <section class="tabs tabs-upper">
+                <a href="#tab-election" class="active"><span class="fui-eye"></span>Elections</a>
+                <a href="#tab-digest"><span class="fui-radio-checked"></span>Digest</a>
+                <a href="#tab-profile"><span class="fui-location"></span>Profile</a>
+            </section>
+            <section class="tab-content text-content tab-election active" id="tab-election">
+            		<p>List of upcoming/recent elections in your favorite countries:</p>
+            		<!-- Table -->
+                    <table class="table table-striped" id="datagrid">
+                        <thead>
+                            <tr>
+                                <th style="width: 45px; font-size: 14px;"></th>
+                                <th style="font-size: 14px; width:75px">Country</th>
+                                <th style="font-size: 14px;">Election for</th>
+                                <th style="font-size: 14px;">Date</th>
+                                <th style="font-size: 14px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	{% for election in elections %}
+                        		<tr>
+                        			<td><img src="{% if election.country.flag %}{{election.country.flag.url}}{% else %}{% static "eguide/img/flags/noflag.png" %}{% endif %}" alt="{{ election.country.name}}" width="30" /></td>
+                        			<td style="font-size:12px"><a href="{% url 'country' election.country.id %}">{{election.country.name}}</a></td>
+                        			<td><a href="{% url 'election' election.id %}">{% if election.institution.name %}{{election.institution.name}}{% else %}Referendum{% endif %}</a></td>
+                        			<td style="font-size:12px">{{election.date|date:"Y-m-d"}}</td>
+                        			<td style="font-size:12px">{{election.election_status.name}}</td>
+                        		</tr>
+		            		{% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- /Table -->
+
+            </section>
+            <section class="tab-content text-content tab-digest" id="tab-digest">
+            	<p>List of digest news from your favorite countries:</p>
+            	<hr />
+                <ul class="text-list">
+		            {% for item in digest %}
+		            <li><a href="{% url 'post' item.id%}">{{item.title}}</a>
+		            	<br>
+		            	<span style="color:#E1A864; font-size: 12px">{{item.post_date|timesince}} ago</span>
+		            	<p style="color:#808080">{{item.excerpt}}</p>
+
+		            </li>
+		            {% endfor %}
+		        </ul>
+            </section>
+            <section class="tab-content text-content tab-profile" id="tab-profile">
+                <p><strong>{{ user.email }}, Welcome!</strong></p>
+                <p>Here is your profile information:</p>
+                <table class="table">
+		            <tr>
+		                <td>Favorite Countries:</td>
+		                <td>
+		                	{% for item in user.favorite_country.all %}
+							  {{ item.name }}<br />
+							{% endfor %}
+		                </td>
+		            </tr>
+		            {% if user.first_name or user.last_name %}
+		            <tr>
+		                <td>Full Name:</td>
+		                <td>{{user.first_name}} {{user.last_name}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.age %}
+		            <tr>
+		                <td>Age:</td>
+		                <td>{{user.age}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.gender %}
+		            <tr>
+		                <td>Gender:</td>
+		                <td>{{user.gender}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.education %}
+		            <tr>
+		                <td>Education:</td>
+		                <td>{{user.education}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.country_name %}
+		            <tr>
+		                <td>You are from</td>
+		                <td>{{user.country_name}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.organization %}
+		            <tr>
+		                <td>Organization Name:</td>
+		                <td>{{user.organization}}</td>
+		            </tr>
+		            {% endif %}
+		            {% if user.organization_type %}
+		            <tr>
+		                <td>Organization Type:</td>
+		                <td>{{user.organization_type}}</td>
+		            </tr>
+		            {% endif %}
+		        </table>
+            </section>
+        </section>
+
+	    <!-- /User Profile -->
+
+	{% else %}
+		<section class="box">
+			<h3><span>Complete Your Profile!</span></h3>
+			<p>Welcome to My Eguide!</p>
+			<p>You have signed up with this email: {{request.user.email}}</p>
+			<p>However, you have not completed your profile yet. To take full benefit of our customizable Election Reporting System, please complete your profile. </p>
+			<p><a href="{% url 'editprofile' %}">Click here</a> to complete your profile.</p>
+		</section>
+
+	{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static "eguide/js/jquery.dataTables.min.js" %}"></script>
+    <script>
+        $('#datagrid').dataTable({
+	        "aaSorting": [[ 3, "desc" ]],
+	        "aLengthMenu": [10, 20, 30, 40, 100],
+	        "iDisplayLength": 20,
+	        "fnDrawCallback":function(oSettings){
+				if (oSettings._iDisplayLength >= oSettings.fnRecordsDisplay()) {
+				        $('#datagrid_paginate').hide();
+				}
+				else
+				{
+					$('#datagrid_paginate').show();
+				}
+			}
+			});
+        $('.dataTables_filter input').attr("placeholder", "Search Elections...");
+    </script>
+{% endblock extra_js %}

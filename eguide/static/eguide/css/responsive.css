@@ -1,0 +1,221 @@
+@media only screen and (max-width: 767px) {
+	.main-nav, .login-menu{
+		display: none;
+	}
+	.slicknav_menu{
+		display: block;
+	}
+    .content .slider {
+        height: 200px;
+    }
+
+    .content .slider .item > img {
+        height: 200px;
+        width: 320px;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    .social form input {
+        width: 270px;
+    }
+
+    footer .copyright img {
+        float: none;
+        margin: 0 0 10px;
+    }
+
+    footer .partners {
+        text-align: center;
+        padding-top: 15px;
+    }
+
+    .big-list a {
+        font-size: .8em;
+    }
+
+    #map-container {
+        width: 280px;
+        height: 160px;
+    }
+
+    #map {
+        height: 160px;
+    }
+
+    .election-results .stats .chart {
+        width: 280px;
+        margin: 0 0 10px;
+    }
+
+    .election-results .stats .chart #donutchart {
+        margin: 0 auto;
+    }
+
+    .election-results .stats {
+        margin-bottom: 0;
+    }
+
+    .election-country .flagship .count {
+        text-align: center;
+        float: none;
+        margin-bottom: 15px;
+    }
+
+    .dataTables_wrapper .table {
+        width: 280px;
+        font-size: 12px;
+    }
+
+    .dataTables_filter input {
+        width: 130px;
+    }
+
+    .flag .titles {
+        font-size: 10px;
+    }
+
+    .dataTables_info,.dataTables_paginate {
+        font-size: .7em;
+    }
+
+    .navbar .nav > li {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        padding: 7px;
+    }
+
+    .main-nav .navbar .nav > li > a {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        overflow: hidden;
+        padding: 0!important;
+    }
+
+    .navbar-inner {
+        min-height: 0;
+    }
+
+    .navbar-inverse .nav > li > a {
+        border-bottom: none;
+    }
+
+    .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container,.span8,.span4,.span6,.country-profile .tabs {
+        width: 320px;
+    }
+
+    header .brand,header .search,footer .copyright {
+        text-align: center;
+    }
+
+    .content .slider .item .overlay p,.navbar-inverse {
+        font-size: 12px;
+    }
+    .social dl dd br,.box > h3 > em,.unbox > h3 > em {
+        display: none;
+    }
+    .dataTables_wrapper .table thead tr th:first-child,.dataTables_wrapper .table tfoot tr th:first-child,.dataTables_wrapper .table tbody tr td:first-child{
+        display: none;
+    }
+    .dataTables_wrapper .table thead tr th:last-child,.dataTables_wrapper .table tfoot tr th:last-child,.dataTables_wrapper .table tbody tr td:last-child {
+        display: none;
+    }
+    .span12{
+    	width: 320px;
+    }
+    #map-container2{
+    	width: 200px;
+    }
+
+
+
+
+
+    .form-horizontal .controls{
+    	width: 280px;
+    	margin-right: 0;
+    }
+    input, textarea, .uneditable-input{
+    	width: 267px;
+    }
+    .form-horizontal .control-label{
+    	float: none;
+    	width: 280px;
+    	text-align: center;
+    }
+    .form-horizontal .form-actions{
+    	padding-left: 0;
+    	text-align: center;
+    }
+    .btn.btn-primary{
+    	margin-bottom: 10px;
+    }
+    .dataTables_info{
+    	display: none;
+    }
+    .dataTables_paginate{
+    	width: 100%;
+    	float: none;
+    	text-align: center;
+    }
+    .country-profile .tabs a{
+    	font-size: 11px;
+    }
+    .tab-content{
+    	font-size: 12px;
+    }
+}
+
+
+
+
+
+
+
+
+
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
+    .span6 {
+        width: 300px;
+    }
+
+    .social dl dd br {
+        display: none;
+    }
+
+    .social form input {
+        width: 570px;
+    }
+
+    footer .copyright {
+        text-align: center;
+    }
+
+    footer .copyright img {
+        float: none;
+        margin: 0 0 10px;
+    }
+
+    footer .partners {
+        text-align: center;
+        padding-top: 15px;
+    }
+
+    .navbar-inverse {
+        font-size: 12px;
+    }
+
+    .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container,.span4 {
+        width: 620px;
+    }
+    .span12{
+    	width: 620px;
+    }
+    #map-container2{
+    	width: 350px;
+    }
+}

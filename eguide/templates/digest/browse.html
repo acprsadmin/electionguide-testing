@@ -1,0 +1,46 @@
+{% extends 'base/section.html' %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb "Digest" "digest" %}
+	{% if category %}
+		{% breadcrumb category.name "digest-category" %}
+	{% endif %}
+{% endblock breadcrumbs %}	
+
+{% block title %} | Digest{% endblock title %}
+
+{% block content%}
+	<!-- Digest -->
+    <section class="box">
+        <h3><span>Digest</span></h3>
+        <ul class="text-list">
+            {% for item in entries %}
+            <li><a href="{% url 'post' item.id%}">{{item.title}}</a>
+            	<br>
+            	<span style="color:#E1A864; font-size: 12px">{{item.post_date|timesince}} ago</span>
+            	<p style="color:#808080">{{item.excerpt}}</p>
+            	
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <div class="pagination">
+		    <span class="step-links">
+		        {% if entries.has_previous %}
+		            <a href="?page={{ entries.previous_page_number }}">previous</a>
+		        {% endif %}
+		
+		        <span class="current">
+		            Page {{ entries.number }} of {{ entries.paginator.num_pages }}.
+		        </span>
+		
+		        {% if entries.has_next %}
+		            <a href="?page={{ entries.next_page_number }}">next</a>
+		        {% endif %}
+		    </span>
+		</div>    
+    </section>
+    <!-- /Digest -->
+{% endblock content%}

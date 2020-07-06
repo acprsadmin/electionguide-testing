@@ -1,0 +1,118 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+     <div class="col-6">
+    <span class="form-election">Election: {{ election.name }}</span> 
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+    Create New Party Record and link to Election
+    </span>
+    </div>
+</div>
+
+<div class="form-container">
+{{ form.errors }}
+<form action="/party/new/{{ election.id }}/" onsubmit="return checkParams()" method="post" id="newPartyForm">
+{{ form.election.id.as_hidden }}
+{% csrf_token %}
+    <input type="text" class="d-none" name="election" id="id_election_id" value="{{ election.id }}" />
+    
+  
+
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.name.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.name.errors }}
+            {{ form.name }}
+             <em>{{ form.name.help_text }}</em>
+        </div>
+     </div>
+
+
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.foreign_name.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.foreign_name.errors }}
+            {{ form.foreign_name }}
+             <em>{{ form.foreign_name.help_text }}</em>
+        </div>
+     </div>
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.url.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.url.errors }}
+            {{ form.url }}
+             <em>{{ form.url.help_text }}</em>
+        </div>
+     </div>
+
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.description.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.description.errors }}
+            {{ form.description }}
+             <em>{{ form.description.help_text }}</em>
+        </div>
+     </div>
+
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.country.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.country.errors }}
+            {{ form.country }}
+             <em>{{ form.country.help_text }}</em>
+        </div>
+     </div>
+
+
+
+<div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ form.type.label_tag }}</label>
+        <div class="col-sm-10">
+            {{ form.type.errors }}
+            {{ form.type }}
+             <em>{{ form.type.help_text }}</em>
+        </div>
+     </div>
+
+
+ <input type="submit" value="Save Party and Link to Election Record" class="btn btn-primary" />
+
+
+</form>
+</div>
+</div>
+{% endblock content %}
+
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+
+<script type="text/javascript">
+    
+    function checkParams() {
+        console.log($('#newPartyForm').serializeArray())
+        return true;
+    }
+  
+   
+</script>

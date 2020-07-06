@@ -1,0 +1,82 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+{% include "election/show/detail_header.html" %}
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="float-right">
+<ul class="list-inline">
+  <li><a href="/partyvote/new/{{ election.id }}" class="btn btn-sm btn-primary">Add Party to Election</a></li>
+  <li><a href="/party/new/{{ election.id }}" class="btn btn-sm btn-primary">Add Party</a></li>
+  </ul>
+</div>
+<hr>
+<h3>Parties</h3>
+
+ <!-- this is the link -->
+
+<table class="table">
+
+  <thead>
+    <th class="eg">Name</th>
+    <th class="eg">Seats Won</th>
+    <th class="eg">Votes</th>
+    <th class="eg">Percentage</th>
+    <th  class="eg"width="50%">Election-related Description</th>
+    <th class="eg"></th>
+
+    </thead>
+    <tbody>
+     {% for pv in partyvotes %}
+      <tr>
+         <td><em>{{ pv.party.country }}</em> | {{ pv.party.name }} <a href="/partyvote/edit/{{ pv.id }}/"><i class="fas fa-pencil"></i></a></td>
+         <td>{{ pv.seats_won|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</td>
+         <td>{{ pv.votes|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</td>
+         <td>{{ pv.percentage|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</td>
+         <td>
+{{ pv.description|safe }}
+       
+
+<!--<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ pv.description }}">
+  description
+</button>-->
+
+       </td>
+   <td> <span class="btn btn-sm btn-danger pv-delete" data-pv-id="{{ pv.id }}" ><i class="fas fa-trash-alt"></i></span></td>
+</tr>
+      {% endfor %}
+</tbody>
+</table>
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+<script>
+
+ $('.pv-delete').click(function() {
+    var pv_id = $(this).data('pv-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/partyvote/delete/' + pv_id + '/');
+    }
+});
+
+</script>
+

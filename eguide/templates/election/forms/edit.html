@@ -1,0 +1,14 @@
+
+{% block content %}
+
+
+<section class="box">
+	<h3><span>Edit Profile</span></h3>
+	
+	<form action="{% url 'edit-election' %}" method="post">{% csrf_token %}
+		{{ form.as_p }}
+		<input class="btn btn-danger" type="submit" value="Submit" />
+	</form>
+
+</section>
+{% endblock %}

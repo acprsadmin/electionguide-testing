@@ -1,0 +1,102 @@
+{% extends 'base/section.html' %}
+{% load staticfiles %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb "Countries" "countries" %}
+{% endblock breadcrumbs %}	
+
+{% block title%} | Country Profiles{% endblock%}
+
+
+{% block content%}
+
+	{#{% render_table table %}#}
+	
+	<!-- Voter Turnout -->
+                <section class="box list-box">
+                    
+                    <style type="text/css">
+                    	.my_class {
+                    		font-size:12px;
+                    	}
+                    </style>
+                    
+                    <!-- Table -->
+                    <table class="table table-striped" id="datagrid">
+                        <thead>
+                            <tr>
+                                <th style="width: 32px; font-size: 14px;">Flag</th>
+                                <th style="width: 270px; font-size: 14px;">Name</th>
+                                <th style="font-size: 14px;">Region</th>
+                                <th style="font-size: 14px;">Population</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            	{% for item in countries %}
+                            		<tr>
+                            			<td><img src="{{item.flag.url}}" style="width:30px;"/></td>
+                            			<td><a href="{% url 'country' item.id %}">{{item.name}}</a></td>
+                            			<td>{{item.region.name}}</td>
+                            			<td>{{item.population}}</td>
+                            		</tr>
+                            	{% endfor %}
+                        </tbody>                   
+                    </table>
+                    <!-- /Table -->
+
+
+                </section>
+                <!-- /Voter Turnout -->
+	
+{% endblock content%}
+
+{% block extra_js %}
+	
+	<script src="{% static "eguide/js/jquery.dataTables.min.js" %}"></script>
+    <script>
+        $('#datagrid').dataTable({
+	        "aaSorting": [[ 1, "asc" ]],
+	        "sPaginationType": "full_numbers",
+	        "aLengthMenu": [10, 20, 30, 50, 100, 300],
+	        "iDisplayLength": 20,
+	        "bPaginate": true,
+	        "bProcessing": true,
+	        "bServerSide": true,
+	        "sAjaxSource":  '{% url "dt-country" %}',
+	        "iDeferLoading": {{count}},
+	        "bDeferRender": true,
+	        "sDom": '<"top"lfip>rt<"bottom"ip<"clear">',
+	        "aoColumns": [
+	          { "bSortable": false, "sClass": "my_class", 
+		      "mRender": function ( data, type, full ) {
+		            if(data.match(/<img/g))
+		           	{	
+		           		return data;
+		           	}
+		           	else
+		           	{
+		           		return '<img src="'+data+'" style="width:30px;">';
+		           	}	
+		      	}},
+		      { "asSorting": [ "asc", "desc" ], 
+		      	"mRender": function ( data, type, full ) {
+		           try {
+			           	if(data.match(/href/g))
+			           		return data;
+			        } catch (err) {
+			        	return '<a href="'+data[1]+'">'+data[0]+'</a>';
+			        }
+		         }},
+		      { "sClass": "my_class" },
+		      { "sClass": "my_class", 
+		      	"mRender": function ( data, type, full ) {
+		           return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		         }},
+		    ]});
+        $('.dataTables_filter input').attr("placeholder", "Search Countries...");
+    </script>
+{% endblock extra_js %}
+
+

@@ -1,0 +1,169 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+
+
+<ul class="list-inline">
+  <li><a href="/election/{{ election.id }}/" class="btn btn-primary">Edit Election</a></li>
+  <li><a href="/ifes_review/{{ election.id }}/" class="btn btn-primary">IFES Review</a></li>
+  </ul>
+<hr>
+
+<h4>{{ election.country.name }}</h1>
+<h2>{{ election.name }}</h2>
+
+<div class="reviewstatus"><h3>
+{% if election.legal_consultant_confirmation %}
+<span class="badge badge-primary">Legal</span>
+{% else %}
+<span class="badge badge-pending">Legal</span>
+{% endif %}
+
+{% if election.cso_confirmation %}
+<span class="badge badge-secondary">CSO</span>
+{% else %}
+<span class="badge badge-pending">CSO</span>
+{% endif %}
+
+{% if election.embassy_confirmation %}
+<span class="badge badge-success">EMB</span>
+{% else %}
+<span class="badge badge-pending">EMB</span>
+{% endif %}
+
+{% if election.ifes_confirmation %}
+<span class="badge badge-warning">IFES</span>
+{% else %}
+<span class="badge badge-pending">IFES</span>
+{% endif %}
+
+{% if election.active %}
+<span class="active">Active</span>
+{% else %}
+<span class="inactive">Inactive</span>
+{% endif %}
+
+
+
+{% if election.is_published %}
+<span class="published">Published</span>
+{% else %}
+<span class="notpublished">Pending Publication</span>
+{% endif %}
+
+</h3>
+
+</div>
+
+
+
+ <ul class="nav nav-pills" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link {% if tab == 'general' %} active{% endif %}" data-toggle="pill" href="#general">General</a>
+    </li>
+
+  <li class="nav-item">
+      <a class="nav-link {% if tab == 'parties' %} active{% endif %}" data-toggle="pill" href="#parties">Parties</a>
+    </li>
+
+
+    <li class="nav-item">
+          <a class="nav-link {% if tab == 'candidates' %} active{% endif %}" data-toggle="pill" href="#candidates">Candidates</a>
+    </li>
+
+    <li class="nav-item">
+    <a class="nav-link {% if tab == 'provisions' %} active{% endif %}" data-toggle="pill" href="#provisions">Provisions</a>
+      
+    </li>
+  <li class="nav-item">
+          <a class="nav-link {% if tab == 'methods' %} active{% endif %}" data-toggle="pill" href="#methods">Voting Methods</a>
+     
+    </li>
+      <li class="nav-item">
+         <a class="nav-link {% if tab == 'rights' %} active{% endif %}" data-toggle="pill" href="#rights">Rights and Information</a>
+    </li>
+
+
+    <li class="nav-item">
+          <a class="nav-link {% if tab == 'reviews' %} active{% endif %}" data-toggle="pill" href="#reviews">Reviews</a>
+    </li>
+<br>
+<br>
+<br>
+
+
+  </ul>
+
+ <div class="tab-content">
+  <div id="general" class="container tab-pane {% if tab == 'general' %} active {% else %} fade {% endif %}">
+      {% include "election/election_view_partials/basic_info.html" %}
+   
+</div>
+
+
+  <div id="parties" class="container tab-pane {% if tab == 'parties' %} active {% else %} fade {% endif %}">
+    {% include "election/election_view_partials/party_votes.html" %}
+  </div>
+
+  <div id="candidates" class="container tab-pane {% if tab == 'candidates' %} active {% else %} fade {% endif %}">
+  {% include "election/election_view_partials/candidate_votes.html" %}
+ </div>
+ 
+<div id="provisions" class="container tab-pane {% if tab == 'provisions' %} active {% else %} fade {% endif %}">
+  {% include "election/election_view_partials/provisions.html" %}
+ </div>
+
+  <div id="methods" class="container tab-pane {% if tab == 'methods' %} active {% else %} fade {% endif %}">
+  {% include "election/election_view_partials/voting_methods.html" %}
+ </div>
+
+  <div id="rights" class="container tab-pane {% if tab == 'rights' %} active {% else %} fade {% endif %}">
+
+  {% include "election/election_view_partials/rights_disinfo.html" %}
+ </div>
+
+  <div id="reviews" class="container tab-pane {% if tab == 'reviews' %} active {% else %} fade {% endif %}">  
+   {% include "election/election_view_partials/election_reviews.html" %}
+ </div>
+</div>
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  $('.cv-delete').click(function() {
+    var cv_id = $(this).data('cv-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/candidate/delete/' + cv_id + '/');
+    }
+});
+ $('.pv-delete').click(function() {
+    var pv_id = $(this).data('pv-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/partyvote/delete/' + pv_id + '/');
+    }
+});
+ $('.rf-delete').click(function() {
+    var rf_id = $(this).data('rf-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/provision/delete/' + rf_id + '/');
+    }
+
+});
+
+
+  
+
+</script>
+

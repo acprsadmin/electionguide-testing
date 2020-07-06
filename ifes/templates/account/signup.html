@@ -1,0 +1,51 @@
+{% extends 'myeguide/profile.html' %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	
+	{% breadcrumb "Register" "account_signup" %}
+
+{% endblock breadcrumbs %}	
+
+{% block content %}
+
+<script type="text/javascript">
+ var RecaptchaOptions = {
+    theme : 'clean'
+ };
+ </script>
+
+<section class="box">
+	<h3><span>Registration Form</span></h3>
+	
+	<p>Already have an account? Then please <a href="{{ login_url }}">sign in</a>.</p>
+	
+	<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+	  {% csrf_token %}
+	  {{ form.as_p }}
+	  {% if redirect_field_value %}
+	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	  {% endif %}
+	  <button class="btn btn-danger btn-submit" type="submit">Sign Up &raquo;</button>
+	</form>
+
+</section>
+{% endblock %}
+
+
+{% block extra_js %}
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function()
+		{
+			var value = getURLParameter('email').replace('%40', '@');
+			if(value != 'null')
+				$('#id_email').val(value);
+			
+		});	
+	</script>
+{% endblock extra_js %}
+
+

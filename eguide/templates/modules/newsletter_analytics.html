@@ -1,0 +1,72 @@
+{% load humanize %}
+{% load eguide_extra %}
+
+<style>
+.analytic-rates {
+    margin-bottom: 30px;
+    margin-top:5px;
+    width:100%;
+}
+.container {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px #EEEEEE;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+    background-color:#FFFFFF;
+    padding-bottom:25px;
+}
+
+.container .container-header {
+    background-color: #FBFBFB;
+    background-image: -moz-linear-gradient(center top , #FFFFFF, #F5F5F5);
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: 0 1px 2px #EEEEEE;
+    color: #84959D;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+.analytic-rates .counter-box {
+    background-color: #F7F7F7;
+    border: 2px solid;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px #999999;
+    color: #84959D;
+    float: left;
+    font-size: 18px;
+    margin: 25px 0px 0px 10px;
+    min-width: 120px;
+    padding: 16px 7px 12px;
+    text-align: center;
+}
+
+</style>
+
+<div class="container analytic-rates">
+	<div style="color: #84959D" class="container-header">
+    	{{newsletter.sent}} Messages Submitted
+    </div>
+   	
+   	{% for item in analytic_items %}
+    <div style="border-color:#5F943E" class="counter-box">
+    	<div class="rate">
+        	{{item.value|percent:newsletter.sent}}<span class="percent">%</span>
+        </div>
+        <div>
+            {{ item.value }}
+        </div>
+        <div style="color: #5F943E" class="event-name">{{item.name}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container analytic-rates">
+	<div style="color: #84959D" class="container-header">
+    	Newsletter Preview
+    </div>
+	{{newsletter.body|safe}}
+</div>

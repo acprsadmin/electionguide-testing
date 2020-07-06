@@ -1,0 +1,10 @@
+	<!-- Digest -->
+    <section class="box">
+        <h3><span>Digest</span></h3>
+        <ul class="text-list">
+            {% for item in digest %}
+            <li><a href="{% url 'post' item.id %}">{{item.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+    <!-- /Digest -->

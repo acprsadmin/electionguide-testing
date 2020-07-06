@@ -1,0 +1,125 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% load cache %}
+{% load thumbnail %}
+
+{% cache 20000 index request.user.username %}
+
+
+{% block content%}
+	<!-- Slider -->
+        <section class="box slider">
+            <div id="myCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    {% for item in digest %}
+                    <div class="{% if forloop.first %}active{% endif %} item">
+                        {% thumbnail item.image.url "620x330" crop="center" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" title="{{item.title}}" alt="{{item.title}}">
+                        {% endthumbnail %}
+                        <div class="overlay">
+                            <h4><a href="{% url 'post' item.id %}">{{item.title}}</a></h4>
+                            <p>{{item.excerpt}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    <!-- /Slider -->
+    <!-- Upcoming Elections -->
+    <section class="box upcoming">
+        <h3><span>Upcoming Elections</span></h3>
+	        <section class="big-list-row">
+	        	<ul class="big-list">
+		            {% for item in election|slice:":6" %}
+			            <li>
+			                <div class="date">{{item.date|date:"d"}}<span class="month">{{item.date|date:"M"}}</span></div>
+			                <a href="{% url 'election' item.id %}">{{item.country.name}}</a>
+			                <h5>{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</h5>
+			            </li>
+		            	{% ifequal forloop.counter 3 %}
+		            	</ul>
+		            	<ul class="big-list">
+		            	{% endifequal %}
+		            {% endfor %}
+	        	</ul>
+	        </section>
+         <h3><span>Map</span></h3>
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+    </section>
+    <!-- /Upcoming Elections -->
+{% endblock content%}
+
+{% block sidebar%}
+
+    {% total_votes %}
+    
+    {% total_elections %}
+    
+    {% recent_results %}
+    
+    {% search_box %}
+    
+    {% digest_box %}
+    
+{% endblock sidebar%}
+
+{% block social_container %}
+
+	<section class="span4 unbox">
+        <h3><span>RSS Updates</span></h3>
+        <dl>
+            <dt>Calendar:</dt>
+            <dd>
+                <a href="{% url 'upcoming-feed' %}">Upcoming Elections</a><br />
+                <a href="{% url 'updates-feed' %}">Election Updates</a>
+            </dd>
+            <dt>Digest:</dt>
+            <dd>
+                <a href="{% url 'digest-feed' 'all' %}">All</a><span class="sep">&bull;</span><a href="{% url 'digest-feed' 'events' %}">Events</a><span class="sep">&bull;</span><a href="{% url 'digest-feed' 'features' %}">Features</a><br />
+                <a href="{% url 'digest-feed' 'news' %}">News</a><span class="sep">&bull;</span><a href="{% url 'digest-feed' 'reports' %}">Reports</a><br />
+                <a href="{% url 'digest-feed' 'from-cepps' %}">From CEPPS</a><br>
+                <a href="{% url 'digest-feed' 'from-our-partners' %}">From Our Partners</a>
+            </dd>
+            
+        </dl>
+        <h3><span>Email Updates</span></h3>
+        <form action="{% url 'account_signup' %}" method="get">
+            <input type="text" name="email" id="email" placeholder="Your email address...">
+            <button type="submit"><span class="fui-check-inverted"></span></button>
+            <p>Subscribe to receive latest digest updates, election news and events.</p>
+        </form>
+    </section>
+    <section class="span4 unbox">
+        <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FElectionGuide&amp;width=300&amp;height=317&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=false&amp;appId=511374545603770" 
+        class="box"
+        scrolling="no" 
+        frameborder="0" 
+        style="border:none; overflow:hidden; width:300px; height:317px; background-color: #FFFFFF" 
+        allowTransparency="true"></iframe>
+    </section>
+    <section class="span4 unbox">
+		<a class="twitter-timeline" href="https://twitter.com/electionguide" data-widget-id="384778453360205824">Tweets by @electionguide</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </section>
+    
+{% endblock social_container %}    
+
+{% block extra_js %}
+<script src="{% static "eguide/js/datamaps.all.min.js" %}"></script>
+<script type="text/javascript">
+	{% include 'base/map.js' %}
+</script>
+
+{% endblock extra_js %}
+
+{% endcache %}

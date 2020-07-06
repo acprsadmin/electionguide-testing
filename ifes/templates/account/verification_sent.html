@@ -1,0 +1,33 @@
+{% extends 'myeguide/profile.html' %}
+{% load i18n %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb "Verify Email" "account_verify" %}
+
+{% endblock breadcrumbs %}	
+
+
+{% block content %}
+
+<section class="box">
+	<h1>{% trans "Verify Your E-mail Address" %}</h1>
+    
+    <p>
+    	{% blocktrans %}
+    	We have sent an e-mail to <a href="mailto:{{email}}">{{ email }}</a> for verification. Follow the link provided in the email to finalize the signup process. 
+    	<br />
+    	<br />
+    	If you haven't received an email, please try to sign in again in three minutes. A new verification email will be sent to you after a sign in attempt. 
+    	<br />
+    	<br />
+    	If you still did not receive it within a few minutes, please contact us.
+    	{% endblocktrans %}
+    </p>
+
+
+
+</section>
+{% endblock %}
+

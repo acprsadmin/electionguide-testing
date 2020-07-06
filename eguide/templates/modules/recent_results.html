@@ -1,0 +1,35 @@
+{% load humanize %}
+{% load staticfiles %}
+
+	<!-- Recent Results -->
+    <section class="box box-center">
+    	<div id="sideCarousel" class="carousel slide" data-interval="false">
+        	<div class="carousel-inner">
+        		{% for election in elections %}
+	        		<div class="item {% if forloop.first %}active{% endif %}">
+				        <section class="flag">
+				            <img src="{% if election.country.flag %}{{election.country.flag.url}}{% else %}{% static "eguide/img/flags/noflag.png" %}{% endif %}" alt="{{ election.country.name}}" style="width:64px;">
+				            <div class="titles">
+				                <h3><a href="{% url 'election' election.id %}">{{election.country.name}}</a></h3>
+				                <h5>{% if election.institution.name %}{{election.institution.name}}{% else %}Referendum{% endif %}</h5>
+				            </div>
+				        </section>
+				        <section>
+				            <div class="number">{{election.cast_votes|intcomma}}</div>
+				            <div class="title">Voted on {{election.date}}</div>
+				        </section>
+				        <!-- <section>
+				            Chart
+				        </section> -->
+				   	</div>
+			   	{% endfor %}
+    		</div>
+    		<ol class="carousel-indicators">
+                {% for election in elections %}
+                	<li data-target="#sideCarousel" data-slide-to="{{forloop.counter0}}" {% if forloop.first %}class="active"{% endif %}></li>
+                {% endfor %}
+            </ol>
+
+    	</div>
+    </section>
+    <!-- /Recent Results -->

@@ -1,0 +1,21 @@
+{% extends 'base/section.html' %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb page.title "page" %}
+{% endblock breadcrumbs %}	
+
+
+{% block title%} | {{page.title}}{% endblock%}
+
+{% block content%}
+	<!-- Digest -->
+    <section class="box">
+    	<h3><span>{{page.title}}</span></h3>
+        <div class="digest-body">
+	        {{page.body|safe}}
+        </div>
+    </section>
+    <!-- /Digest -->
+{% endblock content%}

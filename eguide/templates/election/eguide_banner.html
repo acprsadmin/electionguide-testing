@@ -1,0 +1,21 @@
+
+
+<div class="container-fluid">
+	<div class="row mis-banner">
+		<div class="col-6">
+			<span style="font-size: 28px; color: #666">
+		IFES Election Management 
+</span>
+        </div>
+        <div class="col-6">
+
+			
+				<div class="login-menu float-right">
+					{% if request.user.is_authenticated %}
+					Welcome, <a href="{% url 'myeguide' %}">{{request.user}}</a> | <a href="{% url 'account_change_password' %}">Change Password</a> | <a href="{% url 'account_logout' %}">Sign Out</a>
+				
+					{% endif %}
+				</div>
+			
+			</div>
+	</div>

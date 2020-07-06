@@ -1,0 +1,127 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+<div class="container">
+<div class="row">
+     <div class="col-6">
+    <span class="form-election">Election: {{ election.name }}</span> 
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+    {% if is_create %}
+       Link Party to Election
+    {% else %}
+     Edit Election Party Votes
+   {% endif %}
+    </span>
+    </div>
+</div>
+
+<div class="form-container">
+{{ form.errors }}
+
+{% if is_create %}
+  <form action="/partyvote/new/{{ election.id }}/" onsubmit="return checkParams()" method="post" id="electionForm">
+{% else %}
+  <form action="/partyvote/edit/{{ party_id}}/" onsubmit="return checkParams()" method="post" id="electionForm">
+{% endif %}
+
+{{ form.election.id.as_hidden }}
+{% csrf_token %}
+
+<input type="text" class="d-none" name="election" id="id_election_id" value="{{ election.id }}" />
+
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.party.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.party.errors }}
+    {{ form.party }}
+      <em>{{ form.party.help_text }}</em>
+    </div>
+  </div>     
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.seats_won.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.seats_won.errors }}
+    {{ form.seats_won }}
+      <em>{{ form.seats_won.help_text }}</em>
+    </div>
+  </div>     
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.votes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.votes.errors }}
+    {{ form.votes }}
+      <em>{{ form.votes.help_text }}</em>
+    </div>
+  </div>     
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.percentage.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.percentage.errors }}
+    {{ form.percentage }}
+      <em>{{ form.percentage.help_text }}</em>
+    </div>
+  </div>     
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.description.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.description.errors }}
+    {{ form.description }}
+      <em>{{ form.description.help_text }}</em>
+    </div>
+  </div>     
+
+
+
+
+  <input type="submit" value="Save This Party to Election"  class="btn btn-primary" />
+    
+
+ 
+</form>
+
+</div>
+
+</div>
+
+
+
+{% endblock content %}
+
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+
+<script type="text/javascript">
+    
+    function checkParams() {
+        console.log($('#electionForm').serializeArray())
+        return true;
+    }
+
+
+</script>

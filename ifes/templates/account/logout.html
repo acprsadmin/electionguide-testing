@@ -1,0 +1,30 @@
+{% extends 'myeguide/profile.html' %}
+{% load account %}
+{% load url from future %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb "Sign Out" "account_logout" %}
+
+{% endblock breadcrumbs %}	
+
+
+{% block content %}
+
+<section class="box">
+	<h3><span>Sign In</span></h3>
+	
+	<p>Are you sure you want to sign out?</p>
+
+	<form method="post" action="{% url 'account_logout' %}">
+	  {% csrf_token %}
+	  {% if redirect_field_value %}
+	  <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+	  {% endif %}
+	  <button class="btn btn-danger" type="submit">Sign Out</button>
+	</form>
+
+
+</section>
+{% endblock %}

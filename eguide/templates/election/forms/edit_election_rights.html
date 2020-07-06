@@ -1,0 +1,162 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+{% include "election/eguide_banner.html" %}
+
+
+ <!--<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+-->
+
+{{ form.errors }}
+{% block content %}
+<div class="container">
+
+<div class="row">
+     <div class="col-6">
+    <span class="form-election">Election: {{ election.name }}</span> 
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+    Update Election Rights / Hate Speech / Disinformation
+    </span>
+    </div>
+</div>
+
+
+ <div class="form-container">
+ <input type="submit" value="Update Election" class='btn btn-primary float-right' />
+   <form action="" method="post">{% csrf_token %}
+  {{ myform.media }}
+
+
+
+<h3>Election  Rights</h3>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_support_electoral_rights.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_support_electoral_rights.errors }}
+    {{ form.yn_support_electoral_rights }}
+      {{ form.yn_support_electoral_rights.help_text }}
+    </div>
+  </div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.support_electoral_rights_details.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.support_electoral_rights_details.errors }}
+    {{ form.support_electoral_rights_details }}
+      {{ form.support_electoral_rights_details.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_restrict_electoral_rights.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_restrict_electoral_rights.errors }}
+    {{ form.yn_restrict_electoral_rights }}
+      {{ form.yn_restrict_electoral_rights.help_text }}
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.restrict_electoral_rights_details.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.restrict_electoral_rights_details.errors }}
+    {{ form.restrict_electoral_rights_details }}
+      {{ form.restrict_electoral_rights_details.help_text }}
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.electoral_rights_info_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.electoral_rights_info_source.errors }}
+    {{ form.electoral_rights_info_source }}
+      {{ form.electoral_rights_info_source.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_hate_speech_prohibited.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_hate_speech_prohibited.errors }}
+    {{ form.yn_hate_speech_prohibited }}
+      {{ form.yn_hate_speech_prohibited.help_text }}
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.hate_speech_prohibition.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.hate_speech_prohibition.errors }}
+    {{ form.hate_speech_prohibition }}
+      {{ form.hate_speech_prohibition.help_text }}
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.hate_speech_prohibition_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.hate_speech_prohibition_source.errors }}
+    {{ form.hate_speech_prohibition_source }}
+      {{ form.hate_speech_prohibition_source.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_disinformation_prohibited.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_disinformation_prohibited.errors }}
+    {{ form.yn_disinformation_prohibited }}
+      {{ form.yn_disinformation_prohibited.help_text }}
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.disinformation_prohibition_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.disinformation_prohibition.errors }}
+    {{ form.disinformation_prohibition }}
+      {{ form.disinformation_prohibition.help_text }}
+    </div>
+  </div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.disinformation_prohibition_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.disinformation_prohibition_source.errors }}
+    {{ form.disinformation_prohibition_source }}
+      {{ form.disinformation_prohibition_source.help_text }}
+    </div>
+  </div>
+
+ 
+
+
+
+
+
+    <input type="submit" value="Update Election" class='btn btn-primary' />
+</form>
+
+
+</div>
+</div>
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+{% include "election/mis_js.html" %}
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+

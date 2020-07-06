@@ -1,0 +1,185 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+<style>
+
+td.datewidth {
+  width: 70px;
+}
+
+
+
+
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+{% include "election/eguide_banner.html" %}
+<div class="container-fluid">
+    
+<div class="row">
+     <div class="col-md-6">
+    
+    </div>
+     <div class="col-md-6">
+    <span class="form-title float-right">
+    Current/Recent Elections (definition required) 
+    </span>
+    </div>
+</div>
+<div class="col-12-md">
+<ul class="list-inline">
+  <li><a href="{% url 'election_add' %}"  class="btn btn-primary">Add New Election Record</a></li>
+ </ul>    
+
+
+
+
+
+<!-- Table -->
+<table class="table table-hover" id='current'>
+    <thead>
+        <tr>
+             <th>Original Year</th>
+             <th>Country</th>
+             <th>Election</th>
+             <th>Institution</th>
+            <th class="datewidth">Date*</th>
+            <th class="datewidth">Range**</th>
+            <th class="datewidth">Declared**</th>
+            <th>Status</th>
+            <th>Enabled (1)</th>
+            <th>Published (2)</th>
+            <th>COVID Effect</th>
+            <th>Legal</th>
+            <th>CSO</th>
+            <th>EMB</th>
+            <th>IFES</th>
+             <th class="datewidth">Updated</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+            {% for item in electionresults %}
+            <tr>
+                <td>{{item.original_election_year}}</td>
+                 <td>{{item.country.name}}</td>
+                <td><a href="/viewelection/{{ item.id }}/">{{item.name}}</a></td>
+               
+                <td>{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</td>
+                <td> {{item.date|date:"m/d/y"}} </td>
+                <td>
+                    {{item.election_range_start_date|date:"m/d/y"}}
+                    {%if item.election_range_end_date != item.election_range_start_date %}
+                      -<br>{{item.election_range_end_date|date:"m/d/y"}} 
+                    {% endif %}
+                  </td>
+                  <td style="width: 70px; color: green">
+                    {{item.election_declared_start_date|date:"m/d/y"}}
+                    {%if item.election_declared_end_date != item.election_declared_start_date %}
+                    -<br>{{item.election_declared_end_date|date:"m/d/y"}} 
+                    {% endif %}
+                 </td>
+                <td>{{item.election_status.name}}</td>
+                 <td class="acenter">
+                
+
+                   {% if item.active == true %}         
+                    <i class="fas fa-check-square" style="color: gray"></i>
+                   
+                   {% endif %}
+
+
+
+            </td>
+                <td class="acenter">
+                
+
+                   {% if item.is_published == true %}         
+                    <i class="fas fa-check-square" style="color: green"></i>
+                   {% elif item.is_submitted == true %}
+                   <span class="submitted">Submitted</span>
+                   {% endif %}
+
+
+
+            </td>
+                <td class="acenter">
+                  
+                   {% if item.is_delayed_covid19 ==  true %}         
+                    <i class="fas fa-virus" style="color: red"></i>
+                   {% endif %}
+            </td>
+                <td class="acenter">
+                   
+                    {% if item.legal_consultant_confirmation ==  true %}         
+                    <i class="fas fa-check-square"></i>
+                   {% else %}
+                   
+                   {% endif %}
+                </td>
+                <td class="acenter">
+                    {% if item.cso_confirmation == true %}         
+                    <i class="fas fa-check-square"></i>
+                   {% else %}
+                   
+                   {% endif %}
+                </td>
+                <td class="acenter">
+                  {% if item.embassy_confirmation == true %}         
+                    <i class="fas fa-check-square" style="color: green"></i>
+                   {% else %}
+                   
+                   {% endif %}
+            </td>
+                <td class="acenter">
+                   {% if item.ifes_confirmation == true %}         
+                    <i class="fas fa-check-square"></i>
+                   {% else %}
+                  
+                   {% endif %}
+                </td>
+
+</td>
+                <td class="acenter">
+                  {{ item.date_updated.date|date:"m/d/y"}}
+                </td>
+
+
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+<!-- /Table -->
+<p>* Election Date is older date used in Election Guide. These will be replaced by the Election Range Date and Declared Date</p>
+<p>** End Date are shown if different than Start Date.</p>
+<p>(1) Enabled elections are displayed in Electionguide pages</p>
+<p>(2) Published election are included in Facebook json data pulls</p>
+</div>
+
+{% include "election/mis_js.html" %}
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+ <script>
+      //$(document).ready(function() {
+        //$('#current').DataTable();
+        //} );
+
+
+
+    $(document).ready(function() {
+      var table = $('#current').removeAttr('width').DataTable( {
+         columnDefs: [
+            { width: 100, targets: 4 },
+            { width: 100, targets: 5 }
+        ],
+        fixedColumns: true
+    } );
+} );
+
+
+    </script>

@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load eguide_extra %}
+{% load breadcrumb_tags %}
+{% load cache %}
+
+{% cache 20000 section request.user.username %}
+
+{% block breadcrumbs %}
+	{% breadcrumb "Home" "/" %}	
+{% endblock breadcrumbs %}
+
+{% block content%}
+
+{% endblock content%}
+
+{% block sidebar%}
+
+	{% block sidebar_top %}
+	
+	{% endblock sidebar_top %}
+	
+    {% search_box %}
+    
+    {% digest_box %}
+    
+{% endblock sidebar%}
+
+{% block social_container %}
+
+{% endblock social_container %}    
+{% endcache %}
+

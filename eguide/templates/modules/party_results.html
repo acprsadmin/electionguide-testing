@@ -1,0 +1,30 @@
+
+{% if party_list %}
+<h3><span>Parties:</span></h3>
+<section class="bars bars-extended">
+    <div class="legend">
+        <p>
+            <span>Party</span>
+            <span>Seats Won</span>
+            <span>Seats Change</span>
+            <span>Votes</span>
+        </p>
+    </div>
+{% for item in results %}
+<div>
+    <p>
+        <span style="font-size:14px;">{{ item.party.name }}</span>
+        <span>{{ item.seats_won }}</span>
+        <span>{{item.seats_change}} {{item.seats_change_direction|safe}}</span>
+        <span>{{ item.votes}}</span>
+    </p>
+    {% if item.percentage %}
+    <div class="progress">
+        <div class="bar" style="width:{{item.percentage}}%">{{item.percentage}}%</div>
+    </div>
+    {% endif %}
+</div>
+{% endfor %}    
+
+</section>
+{% endif %}

@@ -1,0 +1,189 @@
+{% extends 'country/browse.html' %}
+{% load humanize %}
+{% load eguide_extra %}
+{% load staticfiles %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb country.name "country" %}
+{% endblock breadcrumbs %}	
+
+{% block title%} | Country Profile: {{country.name}}{% endblock%}
+
+{% block content%}
+	
+	<!-- Country Profile -->
+    <section class="box country-profile tab-container">
+        <section class="tab-header">
+            <section class="flag">
+            	{% if country.flag %}
+                <img style="margin-top:0; width:69px;" src="{{country.flag.url}}" alt="{{country.name}}" width="69" height="40">
+                {% endif %}
+                <div class="titles">
+                    <h3>{{country.official_name}}</h3>
+                    {# <h5>Country Profile</h5> #}
+                </div>
+            </section>
+        </section>
+        <section class="tab-content text-content tab-profile active" id="tab-profile">
+            <table width="100%">
+                <tbody><tr>
+                    <td width="50%"><strong class="tile-title">{{country.population|intcomma}}</strong></td>
+                    <td><strong class="tile-title">{{info.election_number}}</strong></td>
+                </tr>
+                <tr>
+                    <td><p class="muted">Population (as of {{country.population_date}})</p></td>
+                    <td><p class="muted">Elections in our database</p></td>
+                </tr>
+                <tr>
+                    <td><strong class="tile-title">{{info.registered|intcomma}}</strong></td>
+            		<td><strong class="tile-title">{% if info.average_voter_turnout %} {{info.average_voter_turnout|floatformat:2}}% {% else %} N/A {% endif %}</strong></td>
+            	</tr>
+            	<tr>
+            		<td><p class="muted">Registered Voters (as of {{info.registered_date}})</p></td>
+            		<td><p class="muted">Average Turnout</p></td>
+            	</tr>
+            </tbody></table>
+        </section>
+        <section class="tab-content text-content tab-system" id="tab-system">
+            <table class="table">
+	            <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Official Name</th>
+                    	<th>Type</th>
+                    </tr>
+                </thead>
+	            {% for item in institution %}
+	            <tr>
+	                <td>{{item.name}}</td>
+	                <td>{{item.foriegn_name}}</td>
+	                <td>{{item.institution_type.name}}</td>
+	            </tr>
+	            {% endfor %}
+	        </table>
+        </section>
+        <section class="tab-content text-content tab-geography" id="tab-geography">
+            {{country.description|safe}}
+        </section>
+        <section class="tabs">
+            <a href="#tab-profile" class="active"><span class="fui-eye"></span>Info</a>
+            <a href="#tab-system"><span class="fui-radio-checked"></span>Institutions</a>
+            <a href="#tab-geography"><span class="fui-location"></span>Learn More</a>
+        </section>
+    </section>
+    <!-- /Country Profile -->
+    <!-- Institutions -->
+    <section class="box election-institutions">
+        <h3><span>Elections</span></h3>
+        
+        <!-- Table -->
+        <table class="table table-striped" id="datagrid">
+            <thead>
+                <tr>
+                    <th style="font-size: 14px;">Election For</th>
+                    <th style="font-size: 14px;">Date</th>
+                    <th style="font-size: 14px;">Votes</th>
+                    <th style="font-size: 14px;">Registered Voters</th>
+                    <th style="font-size: 14px;">Turn Out</th>
+                </tr>
+            </thead>
+            	{% for item in elections %}
+            	<tr>
+            		<td><a href="{% url 'election' item.id %}">{% if item.institution.name %}{{ item.institution.name }}{% else %}Referendum{% endif %}</a></td>
+            		<td style="font-size:12px">{{ item.date|date:"Y-m-d" }}</td>
+            		<td style="font-size:12px">{% if item.cast_votes > 0 %}{{item.cast_votes|intcomma}}{% else %}-{% endif %}</td>
+            		<td style="font-size:12px">{% if item.registered_voters > 0 %}{{item.registered_voters|intcomma}}{% else %}-{% endif %}</td>
+            		<td style="font-size:12px">{% if item.participation > 0 %}{{item.participation}}%{% else %}-{% endif %}</td>
+            	</tr>
+            	{% endfor %}
+            <tbody>
+                
+            </tbody>                   
+        </table>
+        <!-- /Table -->
+        
+    </section>
+    <!-- /Institutions -->
+    
+    <!-- Voter Turnout -->
+    <section class="box">
+        <h3><span>Voter Turnout</span></h3>
+        <div id="chart_div" style="width: 580px; height: 300px;"></div>
+    </section>
+    <!-- /Voter Turnout -->
+	
+{% endblock content%}
+
+
+{% block sidebar_top %}
+	
+	
+	
+{% endblock sidebar_top %}
+
+{% block extra_js %}
+ 	
+ 	<!-- Chart -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Election'); // Implicit domain column.
+       	data.addColumn('number', 'Turn Out'); // Implicit data column.
+        data.addColumn({type:'string',role:'tooltip', 'p': {'html': true}});
+        data.addRows([
+		  {% for item in elections %}
+          	{% if item.participation %}
+          		['{{item.date}}',  {{item.participation}}, createCustomHTMLContent('{{item.date}}', '{{item.participation}}', '{{item.name}}')],
+          	{% endif %}
+          {% endfor %}
+		]);
+        
+
+        var options = {
+          pieHole        : 0.65,
+          legend         : {position: 'none'},
+          colors         : ['#E64B66', '#0DA8AA', '#4FC5F1', '#FCB061', '#8e44ad', '#2c3e50'],
+          chartArea      : {left:50,top:20,width:"100%",height:"80%"},
+          pieSliceText   : 'none',
+          backgroundColor: 'transparent',
+          seriesType     : "bars",
+          vAxis 		 : {minValue: 0, maxValue: 100},
+         // series         : {5: {type: "line"}},
+          fontName       : 'Lato',
+          tooltip		 : {isHtml: true}
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+      
+      function createCustomHTMLContent(electionDate, turnOut, electionName) {
+		  return '<div style="padding:5px;">' + electionDate + '<br />Turn Out: <strong>' + turnOut + '%</strong><br /><strong>' + electionName + '</strong></div>';
+		}
+    </script>
+    <!-- /Chart -->
+    
+    <script src="{% static "eguide/js/jquery.dataTables.min.js" %}"></script>
+    <script>
+        $('#datagrid').dataTable({
+	        "aaSorting": [[ 1, "desc" ]],
+	        "aLengthMenu": [10, 20, 30, 40, 100],
+	        "iDisplayLength": 20,
+	        "fnDrawCallback":function(oSettings){
+				if (oSettings._iDisplayLength >= oSettings.fnRecordsDisplay()) {
+				        $('#datagrid_paginate').hide();
+				}
+				else
+				{
+					$('#datagrid_paginate').show();
+				}			     
+			}
+			});
+        $('.dataTables_filter input').attr("placeholder", "Search Elections...");
+    </script>
+{% endblock extra_js %}

@@ -1,0 +1,10 @@
+<!-- Digest -->
+<section class="box">
+    <h3><span>Elections in {{country.name}}</span></h3>
+    <ul class="text-list">
+    	{% for election in elections %}
+			<li><a href="/elections/id/{{election.id}}">{{election.name}}</a></li>
+		{% endfor %}
+    </ul>
+</section>
+<!-- /Digest -->

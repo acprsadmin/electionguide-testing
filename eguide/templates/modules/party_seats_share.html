@@ -1,0 +1,46 @@
+{% load eguide_extra %}
+
+{% if seat_share %}
+
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["treemap"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    // Create and populate the data table.
+    var data = google.visualization.arrayToDataTable([
+      ['Party', 'Country', 'Seats Won', 'Seats Change'],
+      {% for item in results %}
+      	{% if forloop.first %}
+      		['{{item.party.country}}', null, 0, 0],
+      	{% endif %}
+      	['{{item.party.name}}', '{{item.party.country}}', {{item.seats_won|integer}}, {{item.seats_change|integer}}],
+      {% endfor %}
+    ]);
+
+    // Create and draw the visualization.
+    var tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+    tree.draw(data, {
+      minColor: '#f00',
+      midColor: '#ddd',
+      maxColor: '#0d0',
+      headerHeight: 15,
+      fontColor: 'black',
+      showScale: true});
+    }
+    
+    
+    
+</script>
+
+{% else %}
+
+<script type="text/javascript">
+	
+	window.onload = function () {
+	    document.getElementById('seat-shares').setAttribute( 'style', 'display:none' );
+	}
+	
+</script>
+
+
+{% endif %}

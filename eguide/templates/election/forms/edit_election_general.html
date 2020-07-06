@@ -1,0 +1,548 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+ <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+{% include "election/eguide_banner.html" %}
+
+
+ <!--<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+-->
+
+{{ form.errors }}
+{% block content %}
+<div class="container">
+<div class="row">
+     <div class="col-6">
+    <span class="form-election">Election: {{ election.name }}</span> 
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+     Edit Election Data
+    
+    </span>
+    </div>
+</div>
+
+ <!-- Tab panes -->
+ <div class="form-container">
+   <form action="" method="post">{% csrf_token %}
+  {{ myform.media }}
+
+
+  <h3>Basic</h3>
+
+
+   <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.is_delayed_covid19.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.is_delayed_covid19.errors }}
+    {{ form.is_delayed_covid19 }}&nbsp;&nbsp;&nbsp;
+      <em>{{ form.is_delayed_covid19.help_text }}</em>
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.original_election_year.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.original_election_year.errors }}
+    {{ form.original_election_year }}
+      {{ form.original_election_year.help_text }}
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.country.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.country.errors }}
+    {{ form.country }}
+      {{ form.country.help_text }}
+    </div>
+  </div>
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.institution.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.institution.errors }}
+    {{ form.institution }}
+      {{ form.institution.help_text }}
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.name.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.name.errors }}
+    {{ form.name }}
+      <em>{{ form.name.help_text }}</em>
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.description.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.description.errors }}
+    {{ form.description }}
+      <em>{{ form.description.help_text }}</em>
+    </div>
+  </div>
+<hr>
+<span class="form-subhead">Election Date Range</span>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Start</label>
+    <div class="col-sm-4">
+      {{ form.election_range_start_date.errors }}
+			{{ form.election_range_start_date }}
+			<em>{{ form.election_range_start_date.help_text }}</em>
+    </div>
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-4">
+   </div>
+    <label class="col-sm-2 col-form-label">End</label>
+    <div class="col-sm-4">
+      {{ form.election_range_end_date.errors }}
+			{{ form.election_range_end_date }}
+			<em>{{ form.election_range_end_date.help_text }}</em>
+    </div>
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-4">
+   </div>
+  <label class="col-sm-2 col-form-label">{{ form.election_range_notes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_range_notes.errors }}
+    {{ form.election_range_notes }}
+      <em>{{ form.election_range_notes.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">{{ form.election_range_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_range_source.errors }}
+    {{ form.election_range_source }}
+      <em>{{ form.election_range_source.help_text }}</em>
+    </div>
+
+
+</div>
+
+<span class="form-subhead">Declared Date Range</span>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Start</label>
+      <div class="col-sm-4">
+        {{ form.election_declared_start_date.errors }}
+        {{ form.election_declared_start_date }}
+        <em>{{ form.election_declared_start_date.help_text }}</em>
+      </div>
+     <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+       {{ form.election_declared_start_time.errors }}
+      {{ form.election_declared_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.election_declared_start_time.help_text }}</em>
+   </div>
+    <label class="col-sm-2 col-form-label">End</label>
+    <div class="col-sm-4">
+       {{ form.election_declared_end_date.errors }}
+			{{ form.election_declared_end_date }}
+			<em>{{ form.election_declared_end_date.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.election_declared_end_time.errors }}
+      {{ form.election_declared_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.election_declared_end_time.help_text }}</em>
+   </div>
+  <label class="col-sm-2 col-form-label">{{ form.election_declared_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_declared_source.errors }}
+    {{ form.election_declared_source }}
+      <em>{{ form.election_declared_source.help_text }}</em>
+    </div>
+</div>
+
+
+
+<span class="form-subhead">Blackout Date Range</span>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Start</label>
+      <div class="col-sm-4">
+        {{ form.election_blackout_start_date.errors }}
+        {{ form.election_blackout_start_date }}
+        <em>{{ form.election_blackout_start_date.help_text }}</em>
+      </div>
+     <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+      {{ form.election_blackout_start_time.errors }}
+      {{ form.election_blackout_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.election_blackout_start_time.help_text }}</em>
+   </div>
+    <label class="col-sm-2 col-form-label">End</label>
+    <div class="col-sm-4">
+       {{ form.election_blackout_end_date.errors }}
+       {{ form.election_blackout_end_date }}
+      <em>{{ form.election_blackout_end_date.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.election_blackout_end_time.errors }}
+      {{ form.election_blackout_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.election_blackout_end_time.help_text }}</em>
+   </div>
+
+ <label class="col-sm-2 col-form-label">{{ form.blackout_date_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.blackout_date_source.errors }}
+    {{ form.blackout_date_source }}
+      <em>{{ form.blackout_date_source.help_text }}</em>
+    </div>
+
+</div>
+<hr>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.administering_election_commission_website.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.administering_election_commission_website.errors }}
+    {{ form.administering_election_commission_website }}
+      <em>{{ form.administering_election_commission_website.help_text }}</em>
+    </div>
+  </div>
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.source_website.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.source_website.errors }}
+    {{ form.source_website }}
+      <em>{{ form.source_website.help_text }}</em>
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.voter_registration_deadline.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.voter_registration_deadline.errors }}
+    {{ form.voter_registration_deadline }}
+      <em>{{ form.voter_registration_deadline.help_text }}</em>
+    </div>
+  </div>
+
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_candidate_filing_deadline.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_candidate_filing_deadline.errors }}
+    {{ form.election_candidate_filing_deadline }}
+      <em>{{ form.election_candidate_filing_deadline.help_text }}</em>
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_candidate_filing_deadline_notes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_candidate_filing_deadline_notes.errors }}
+    {{ form.election_candidate_filing_deadline_notes }}
+      <em>{{ form.election_candidate_filing_deadline_notes.help_text }}</em>
+    </div>
+  </div>
+
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_candidate_filing_deadline_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_candidate_filing_deadline_source.errors }}
+    {{ form.election_candidate_filing_deadline_source }}
+      <em>{{ form.election_candidate_filing_deadline_source.help_text }}</em>
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.voting_age_minimum_inclusive.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.voting_age_minimum_inclusive.errors }}
+    {{ form.voting_age_minimum_inclusive }}
+      <em>{{ form.voting_age_minimum_inclusive.help_text }}</em>
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.voting_age_minimum_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.voting_age_minimum_source.errors }}
+    {{ form.voting_age_minimum_source }}
+      <em>{{ form.voting_age_minimum_source.help_text }}</em>
+    </div>
+  </div>
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.is_national_exec.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.is_national_exec.errors }}
+    {{ form.is_national_exec }} &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.is_national_exec.help_text }}
+    </div>
+ 
+    <label class="col-sm-2 col-form-label">{{ form.is_national_legislative.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.is_national_legislative.errors }}
+    {{ form.is_national_legislative }} &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.is_national_legislative.help_text }}
+    </div>
+
+    <label class="col-sm-2 col-form-label">{{ form.is_national_upper.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.is_national_upper.errors }}
+    {{ form.is_national_upper }}  &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.is_national_upper.help_text }}
+    </div>
+ 
+    <label class="col-sm-2 col-form-label">{{ form.is_national_lower.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.is_national_lower.errors }}
+    {{ form.is_national_lower }} &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.is_national_lower.help_text }}
+    </div>
+</div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_scope.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_scope.errors }}
+    {{ form.election_scope }}
+      {{ form.election_scope.help_text }}
+    </div>
+  </div>
+
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_status.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_status.errors }}
+    {{ form.election_status }}
+      {{ form.election_status.help_text }}
+    </div>
+  </div>
+
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_type.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_type.errors }}
+    {{ form.election_type }}
+      {{ form.election_type.help_text }}
+    </div>
+  </div>
+
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.electoral_system.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system.errors }}
+    {{ form.electoral_system }}
+      {{ form.electoral_system.help_text }}
+    </div>
+  </div>
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.electoral_system_other.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system_other.errors }}
+    {{ form.electoral_system_other }}
+      {{ form.electoral_system_other.help_text }}
+    </div>
+  </div>
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.electoral_system_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system_source.errors }}
+    {{ form.electoral_system_source }}
+      {{ form.electoral_system_source.help_text }}
+    </div>
+  </div>
+
+     
+
+
+<span class="form-subhead">Election Results</span>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.female_elected.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.female_elected.errors }}
+    {{ form.female_elected }}
+      {{ form.female_elected.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.registered_voters.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.registered_voters.errors }}
+    {{ form.registered_voters }}
+      {{ form.registered_voters.help_text }}
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.registered_voters_male.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.registered_voters_male.errors }}
+    {{ form.registered_voters_male }}
+      {{ form.registered_voters_male.help_text }}
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.registered_voters_female.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.registered_voters_female.errors }}
+    {{ form.registered_voters_female }}
+      {{ form.registered_voters_female.help_text }}
+    </div>
+  </div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.registered_voters_date.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.registered_voters_date.errors }}
+    {{ form.registered_voters_date }}
+      {{ form.registered_voters_date.help_text }}
+    </div>
+  </div>
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.registered_voters_source.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.registered_voters_source.errors }}
+    {{ form.registered_voters_source }}
+      {{ form.registered_voters_source.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.cast_votes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.cast_votes.errors }}
+    {{ form.cast_votes }}
+      {{ form.cast_votes.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.valid_votes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.valid_votes.errors }}
+    {{ form.valid_votes }}
+      {{ form.valid_votes.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.invalid_votes.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.invalid_votes.errors }}
+    {{ form.invalid_votes }}
+      {{ form.invalid_votes.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.ballot_description.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.ballot_description.errors }}
+    {{ form.ballot_description }}
+      {{ form.ballot_description.help_text }}
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.ballot_file.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.ballot_file.errors }}
+    {{ form.ballot_file }}
+      {{ form.ballot_file.help_text }}
+    </div>
+  </div>
+
+
+
+
+    <input type="submit" value="Update" class='btn btn-primary' />
+</form>
+
+
+</div>
+</div>
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+ <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+
+  <script>
+      $('#id_election_range_start_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_range_end_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_declared_start_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_declared_end_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_blackout_start_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_blackout_end_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_registered_voters_date').datepicker({format: 'yyyy-mm-dd'}); 
+      $('#id_election_candidate_filing_deadline').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_voter_registration_deadline').datepicker({format: 'yyyy-mm-dd'});
+
+     //$('#id_election_declared_start_time').timepicker();
+     //$('#id_election_declared_end_time').timepicker();
+     //$('#id_election_blackout_start_time').timepicker();
+     //$('#id_election_blackout_end_time').timepicker();
+  </script>

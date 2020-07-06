@@ -1,0 +1,11 @@
+
+
+
+
+        {% for item in elections %}
+            <strong>{{ item.id }}<br>
+            {{ item.name }}<br></strong><br>
+
+            {{ item.inperson_voting_instructions }}
+            <hr>
+        {% endfor %}

@@ -1,0 +1,102 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+{% include "election/show/detail_header.html" %}
+
+<div class="float-right">
+<ul class="list-inline">
+   <li class="float-right"><a href="/edit_rights/{{ election.id }}/" class="btn btn-sm btn-primary">Edit Rights/Information</a></li>
+  </ul>
+</div>
+<hr>
+<h3>Rights and Information</h3>
+  
+<div class="row">
+  <div class="col-md-4">
+<div class="subhead-row">Electoral Rights</div>
+  <div class="data-row">
+   Supported: <strong>
+      {% if election.yn_support_electoral_rights == 1 %}
+        Yes
+      {% elif election.yn_support_electoral_rights == 2 %}
+         No
+         {% else %}
+        <span class='defaultnone'>&nbsp;&nbsp;</span>
+         {% endif %}
+
+    </strong><br> 
+   <span class="details">Details:</span><br><small> {{ election.support_electoral_rights_details|safe }}</small>
+  </div>
+  <div class="data-row">
+  Restricted: <strong>
+
+
+ {% if election.yn_restrict_electoral_rights == 1 %}
+        Yes
+      {% elif election.yn_restrict_electoral_rights == 2 %}
+         No
+         {% else %}
+        <span class='defaultnone'>&nbsp;&nbsp;</span>
+         {% endif %}
+
+
+  </strong><br>
+  <span class="details">Details:</span><br>
+  <small> {{ election.restrict_electoral_rights_details|safe }}</small>
+  </div>
+  <div class="data-row">
+   <span class="source">Source:</span> {{ election.electoral_rights_source|default:"" }}
+  </div>
+  </div>
+
+ <div class="col-md-4">
+<div class="subhead-row">Hate Speech</div>
+    <div class="data-row">
+     Prohibited: <strong>
+    {% if election.yn_hate_speech_prohibited == 1 %}
+        Yes
+      {% elif election.yn_hate_speech_prohibited == 2 %}
+         No
+         {% else %}
+        <span class='defaultnone'>&nbsp;&nbsp;</span>
+         {% endif %}
+
+  </strong><br>
+  <span class="details">Details:</span><br>
+  <small> {{ election.hate_speech_details|safe }}</small><br>
+<span class="source">Source:</span> {{ election.hate_speech_prohibition_details|default:"" }}
+  </div>
+</div>
+ <div class="col-md-4">
+<div class="subhead-row">Disinformation</div>
+    <div class="data-row">
+Prohibited: <strong>
+  {% if election.yn_disinformation_prohibited == 1 %}
+        Yes
+      {% elif election.yn_disinformation_prohibited == 2 %}
+         No
+         {% else %}
+        <span class='defaultnone'>&nbsp;&nbsp;</span>
+         {% endif %}
+</strong><br>
+<span class="details">Details:</span><br>
+<small> {{ election.disinformation_details|safe }} </small><br>
+<span class="source">Source:</span> {{ election.disinformation_prohibition_source|default:"" }}
+  </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+{% include "election/mis_js.html" %}
+

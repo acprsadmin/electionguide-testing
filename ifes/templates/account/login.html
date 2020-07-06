@@ -1,0 +1,89 @@
+{% extends 'myeguide/profile.html' %}
+{% load account %}
+{% load staticfiles %}
+{% load url from future %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	
+	{% breadcrumb "Login" "login" %}
+
+{% endblock breadcrumbs %}	
+
+
+{% block content %}
+
+	<style type="text/css">
+		.errorlist {
+			list-style-type:none;
+			margin:0;
+			font-size:14px;
+			color:#ff0000;
+		}
+	</style>
+
+	<!-- Login -->
+	<section class="box">
+	    <h3><span>Sign In</span></h3>
+	    
+	    {% if socialaccount.providers  %}
+			<p>Please sign in with one
+			of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> 
+			for a {{site_name}} account and sign in below:</p>
+			
+			<div class="socialaccount_ballot">
+			  <ul class="socialaccount_providers">
+			    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+			  </ul>
+			  <div class="login-or">or</div>
+			</div>
+			
+			{% include "socialaccount/snippets/login_extra.html" %}
+		{% endif %}
+	    
+	    <form method="POST" action="{% url 'account_login' %}" class="form-horizontal">
+	  	{% csrf_token %}
+	    	{{ form.non_field_errors }}
+	        <div class="control-group">
+	            <label class="control-label">Login:</label>
+	            <div class="controls">
+	                {{ form.login }}
+	                <span class="help-inline">{{ form.login.errors }}</span>
+	            </div>
+	        </div>
+	        <div class="control-group">
+	        	
+	            <label class="control-label">Password:</label>
+	            <div class="controls">
+	                {{ form.password }}
+	                <span class="help-inline">{{ form.password.errors }}</span>
+	            </div>
+	        </div>
+	        <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <label for="remember" class="checkbox">
+                        <input type="checkbox" name="remember" id="remember" data-toggle="checkbox"> Remember Me?
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                        <a href="{% url 'account_reset_password' %}">Fogot Your Password?</a>
+                </div>
+            </div>
+	        <div class="form-actions">
+	            <button type="submit" class="btn btn-primary">Login</button>
+	            <a href="{% url 'account_signup'%}" class="btn btn-info">Not a Member? Register</a>
+	        </div>
+	    </form>
+	</section>
+	<!-- /Login -->
+
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{% static "eguide/js/flatui-checkbox.js" %}"></script>
+{% endblock extra_js %}

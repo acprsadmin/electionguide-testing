@@ -1,0 +1,160 @@
+{% load staticfiles %}
+{% load humanize %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!-- Facebook sharing information tags -->
+        <meta property="og:title" content="{{subject}}">
+        
+        <title>{{subject}}</title>
+		
+	</head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: none;margin: 0;padding: 0;background-color: #FFF;width: 100%;">
+    	<center>
+        	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable" style="margin: 0;padding: 0;background-color: #FFF;height: 100%;width: 100%;">
+            	<tr>
+                	<td align="center" valign="top" style="padding-top: 20px;border-collapse: collapse;">
+                    	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer" style="border: 0;background-color: #FFFFFF;">
+                        	<tr>
+                            	<td align="center" valign="top" style="border-collapse: collapse;">
+                                    <!-- // Begin Template Header \ -->
+                                	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader" style="background-color: #FFFFFF;border-bottom: 0;">
+                                        <tr>
+                                            <td class="headerContent" style="border-collapse: collapse;color: #202020;font-family: Arial;font-size: 34px;font-weight: bold;line-height: 100%;padding: 0 0 20px;text-align: center;vertical-align: middle;">
+                                            
+                                            	<!-- // Begin Module: Standard Header Image \ -->
+                                            	<a href="{{domain}}"><img src="{% static "eguide/img/logo.png" %}" style="max-width: 600px;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext></a>
+                                            	<!-- // End Module: Standard Header Image \ -->
+                                            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Header \ -->
+                                </td>
+                            </tr>
+                        	<tr>
+                            	<td align="center" valign="top" style="border-collapse: collapse;">
+                                    <!-- // Begin Template Body \ -->
+                                	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
+                                    	<tr>
+                                            <td valign="top" style="border-collapse: collapse;">
+                                
+                                                <!-- // Begin Module: Standard Content \ -->
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                    	<td valign="top" style="padding-bottom: 20px;border-collapse: collapse;">
+                                                    	  <h4 class="h4" style="color: #1B3578;display: block;font-family: Arial;font-size: 18px;font-weight: bold;line-height: 100%;margin-top: 20px;margin-right: 0;margin-bottom: 15px;margin-left: 0;text-align: left;border-bottom: 1px solid #dedede;padding-bottom: 10px;"><a href="{{ domain }}{% url 'elections-type' 'upcoming' %}" style="color: #1B3578;">Upcoming Elections</a></h4>
+                                                          <table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable" style="background-color: #FFFFFF;">
+                                                              {% for election in future_elections %}
+                                                              <tr mc:repeatable>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content00" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    <a href="{{domain}}{% url 'election' election.id %}">{{election.country.name}}</a>
+                                                                  </td>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content01" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    {{election.date}}
+                                                                  </td>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content02" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    {%if election.institution.name %}{{election.institution.name}}{% else %}Referendum{% endif %}
+                                                                  </td>
+                                                              </tr>
+                                                              {% endfor %}
+                                                              
+                                                          </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                    	<td valign="top" style="padding-bottom: 20px;border-collapse: collapse;">
+                                                    	  <h4 class="h4" style="color: #1B3578;display: block;font-family: Arial;font-size: 18px;font-weight: bold;line-height: 100%;margin-top: 20px;margin-right: 0;margin-bottom: 15px;margin-left: 0;text-align: left;border-bottom: 1px solid #dedede;padding-bottom: 10px;"><a href="{{ domain }}{% url 'elections-type' 'past' %}" style="color: #1B3578;">Recent Election Results</a></h4>
+                                                          <table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable" style="background-color: #FFFFFF;">
+                                                              {% for election in updated_elections %}
+                                                              <tr mc:repeatable>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content00" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    <a href="{{domain}}{% url 'election' election.id %}">{{election.country.name}}</a>
+                                                                  </td>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content01" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    {{election.date}}
+                                                                  </td>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content02" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    {%if election.institution.name %}{{election.institution.name}}{% else %}Referendum{% endif %}
+                                                                  </td>
+                                                                  <td valign="top" class="dataTableContent" mc:edit="data_table_content02" style="border-collapse: collapse;border-bottom: 1px solid #ededed;border-top: 0;color: #202020;font-family: Helvetica;font-size: 12px;font-weight: bold;line-height: 150%;text-align: left;">
+                                                                    {{election.cast_votes|intcomma }} Voted
+                                                                  </td>
+                                                              </tr>
+                                                              {% endfor %}
+                                                          </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top" class="bodyContent" style="border-collapse: collapse;background-color: #FFFFFF;">
+                                                            <div mc:edit="std_content00" style="color: #505050;font-family: Arial;font-size: 14px;line-height: 150%;text-align: left;">
+                                                                <h4 class="h4" style="color: #1B3578;display: block;font-family: Arial;font-size: 18px;font-weight: bold;line-height: 100%;margin-top: 20px;margin-right: 0;margin-bottom: 15px;margin-left: 0;text-align: left;border-bottom: 1px solid #dedede;padding-bottom: 10px;">Period in Review:</h4>
+                                                                {% for item in digest %}
+                                                                <p>
+                                                                	<strong><a href="{{domain}}{% url 'post' item.id %}" style="color: #336699;font-weight: normal;text-decoration: underline;">{{item.title}}</a> ({{item.post_date|date:"M. d, Y"}})</strong>:<br>
+                                                                	{{item.excerpt}}
+                                                            	</p>
+                                                            	{% endfor %}
+                                                            	
+
+                                                            	<br>
+                                                            	<a href="https://twitter.com/electionguide" style="color: #336699;font-weight: normal;text-decoration: underline;">Follow Us on Twitter</a><br>
+                                                            	<a href="https://www.facebook.com/ElectionGuide" style="color: #336699;font-weight: normal;text-decoration: underline;">Like Us on Facebook</a><br>
+                                                         		<p><small>For more election news and updates, visit our website at <a href="{{domain}}">www.electionguide.org</a> To subscribe to ElectList!, visit <a href="{{domain}}">www.electionguide.org</a> You can also sign up for My Eguide, a free portal of election information customized to your country-specific interests.</small></p>
+                                                            </div>
+														</td>
+                                                    </tr>
+                                                </table>
+                                                <!-- // End Module: Standard Content \ -->
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Body \ -->
+                                </td>
+                            </tr>
+                        	<tr>
+                            	<td align="center" valign="top" style="border-collapse: collapse;">
+                                    <!-- // Begin Template Footer \ -->
+                                	<table border="0" cellpadding="10" cellspacing="0" width="600" id="templateFooter" style="background-color: #FFFFFF;border-top: 0;">
+                                    	<tr>
+                                        	<td valign="top" class="footerContent" style="border-collapse: collapse;">
+                                            
+                                                <!-- // Begin Module: Transactional Footer \ -->
+                                                <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td valign="top" style="border-collapse: collapse;">
+                                                            <div mc:edit="std_footer" style="color: #707070;font-family: Arial;font-size: 12px;line-height: 125%;text-align: center;">
+																<em>© Copyright 2013, <a href="http://www.ifes.org">IFES</a> </em>
+																<br />
+																1850 K Street, NW, 5th Floor, Washington, D.C. 20006 <br />Tel: +1.202.350.6700 | Fax: +1.202.350.6701
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="middle" id="utility" style="border-collapse: collapse;background-color: #FFFFFF;border: 0;">
+                                                            <div mc:edit="std_utility" style="color: #707070;font-family: Arial;font-size: 12px;line-height: 125%;text-align: center;">
+                                                                &nbsp;<a href="%mailing_list_unsubscribe_url%" style="color: #336699;font-weight: normal;text-decoration: underline;">Unsubscribe</a> | <a href="{{domain}}{% url 'myeguide' %}" style="color: #336699;font-weight: normal;text-decoration: underline;">Update MyEguide</a>&nbsp;
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- // End Module: Transactional Footer \ -->
+                                            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Footer \ -->
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+{% load eguide_extra %}
+
+{% block field_sets %}
+  
+  
+  
+  {% for fieldset in adminform %}
+     {% include "admin/includes/fieldset.html" %}
+  {% endfor %}
+  
+  {% if adminform.model_admin.pk %}
+  	{% newsletter_analytics adminform.model_admin.pk %}
+  {% endif %}
+{% endblock %}

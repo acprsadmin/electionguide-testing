@@ -1,0 +1,103 @@
+<div class="row">
+	<div class="col-6">
+		<span class="electiontitle"><span class="electioncountryname"> {{ election.country.name }}</span>: {{ election.name }}</span>
+	</div>
+	<div class="col-6">
+	    
+
+<ul class="list-group list-group-horizontal float-right">
+  <li class="list-group-item">
+        {% if election.legal_consultant_confirmation %}
+		<span class="badge badge-primary">Legal</span>
+		{% else %}
+		<span class="badge badge-pending">Legal</span>
+		{% endif %}
+  </li>
+  <li class="list-group-item">
+  	{% if election.cso_confirmation %}
+		<span class="badge badge-secondary">CSO</span>
+		{% else %}
+		<span class="badge badge-pending">CSO</span>
+		{% endif %}
+
+  </li>
+  <li class="list-group-item">
+	{% if election.embassy_confirmation %}
+		<span class="badge badge-success">EMB</span>
+		{% else %}
+		<span class="badge badge-pending">EMB</span>
+		{% endif %}
+  </li>
+
+ <li class="list-group-item">
+	{% if election.ifes_confirmation %}
+		<span class="badge badge-warning">IFES</span>
+		{% else %}
+		<span class="badge badge-pending">IFES</span>
+		{% endif %}
+
+  </li>
+
+<li class="list-group-item">
+{% if election.is_published %}
+           <span class="published">Published</span>
+        {% elif election.is_submitted %}
+       <span class="submitted">Submitted for Publication</span>
+		{% endif %}
+</li>
+
+<li class="list-group-item">
+{% if election.active %}
+		<span class="active">Active</span>
+		{% else %}
+		<span class="inactive">Inactive</span>
+		{% endif %}
+</li>
+
+</ul>
+
+
+
+	</div>
+</div>
+
+
+<a href="{% url 'allelections' %}" class="btn btn-sm btn-info">Return to Current Elections</a><br>
+
+
+ <ul class="nav nav-pills" role="tablist">
+    <li class="nav-item">
+        <a href="/election/{{ election.id }}/general" class="nav-link">General</a>
+    </li>
+
+  <li class="nav-item">
+      <!-- <a href="/detail_parties/{{ election.id }}/" class="nav-link">Parties</a> -->
+      <a href="/election/{{ election.id }}/parties" class="nav-link">Parties</a>
+    </li>
+
+
+    <li class="nav-item">
+        <a href="/election/{{ election.id }}/candidates" class="nav-link">Candidates</a>
+    </li>
+
+    <li class="nav-item">
+
+        <a href="/election/{{ election.id }}/provisions" class="nav-link">Provisions</a>
+    </li>
+  <li class="nav-item">
+
+        <a href="/election/{{ election.id }}/methods" class="nav-link">Voting Methods</a>
+  </li>
+   <li class="nav-item">
+        <a href="/election/{{ election.id }}/rights" class="nav-link">Rights and Information</a>
+    </li>
+    <li class="nav-item">
+        <a href="/election/{{ election.id }}/reviews" class="nav-link">Reviews</a>
+    </li>
+
+     <li class="nav-item">
+        <a href="/election/{{ election.id }}/xls" class="nav-link">Excel</a>
+    </li>
+  </ul>
+
+

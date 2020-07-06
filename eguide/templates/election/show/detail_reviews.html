@@ -1,0 +1,110 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+{% include "election/show/detail_header.html" %}
+
+
+<div class="float-right">
+<ul class="list-inline">
+   <li class="float-right"><a href="/edit_reviews/{{ election.id }}/" class="btn btn-sm btn-primary">IFES Review</a></li>
+  </ul>
+</div>
+<hr>
+<h3>Election Data Reviews</h3>
+
+
+
+<div class="subhead-row">Legal Consultant</div>
+  <div class="data-row">
+   Reviewer Name: <strong>{{ election.legal_consultant_name|default:"" }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirmed: <strong>{{ election.legal_consultant_confirmation }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirm Date: <strong>{{ election.legal_consultant_confirmation_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+  </div>
+  <div class="data-row">
+   Review Comments:<br>
+   <small>{{ election.legal_consultant_comments|safe }}</small> 
+  </div>
+
+
+
+<div class="subhead-row">CSO Review</div>
+  <div class="data-row">
+   Reviewer Name: <strong>{{ election.cso_confirmation_name|default:"" }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirmed: <strong>{{ election.cso_confirmation }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirm Date: <strong>{{ election.cso_confirmation_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+  </div>
+  <div class="data-row">
+   Review Comments:<br>
+   <small>{{ election.cso_comments|safe }}</small> 
+  </div>
+
+
+<div class="subhead-row">EMB Review</div>
+  <div class="data-row">
+   Reviewer Name: <strong>{{ election.embassy_confirmation_name|default:"" }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirmed: <strong>{{ election.embassy_confirmation }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirm Date: <strong>{{ election.embassy_confirmation_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+  </div>
+  <div class="data-row">
+   Review Comments:<br>
+   <small>{{ election.embassy_comments|safe }}</small> 
+  </div>
+
+
+
+
+<div class="subhead-row">IFES Review</div>
+  <div class="data-row">
+   Reviewer Name: <strong>{{ election.ifes_confirmation_name|default:"" }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirmed: <strong>{{ election.ifes_confirmation }}</strong> 
+  </div>
+  <div class="data-row">
+   Confirm Date: <strong>{{ election.ifes_confirmation_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+  </div>
+  <div class="data-row">
+   Review Comments:<br>
+   <small>{{ election.ifes_comments|safe }}</small> 
+  </div>
+
+<div class="subhead-row">Eguide Display</div>
+  <div class="data-row">
+ Show Results: <strong>{{ election.show_results }}</strong>
+
+  </div>
+  <div class="data-row">
+  Show Seat Shares: <strong>{{ election.show_seat_shares }}</strong>
+  </div>
+
+  <div class="data-row">
+  Legacy ID: <strong>{{ election.legacy_id }}</strong>
+  </div>
+ <div class="data-row">
+ Facebook API Accessed Date: <strong>{{ election.api_access_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+{% include "election/mis_js.html" %}
+

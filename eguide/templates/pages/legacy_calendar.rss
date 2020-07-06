@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>ElectionGuide.org Elections Calendar</title>
+		<description>
+			This year's elections
+		</description>
+		<language>
+			en-us
+		</language>
+		<copyright>
+			(C) Copyright {% now "Y" %}, all rights reserved
+		</copyright>
+		<pubDate>
+			{{today}}
+		</pubDate>
+		{% for election in elections %}
+			<item>
+				<has_month>
+					<![CDATA[1]]>
+				</has_month>
+				<pubDate>
+					{{election.date_updated}}
+				</pubDate>
+				<country_id>
+					<![CDATA[{{election.country.id}}]]>
+				</country_id>
+				<link>
+				<![CDATA[{{election.link}}]]></link>
+				<flag>
+					<![CDATA[<a href="{{election.country.link}}"><img src="{% if election.country.flag %}{{election.country.flag.url}}{% endif %}" alt="{{ election.country.name}}" style="width:50px" /></a>]]>
+				</flag>
+				<thecountry>
+					<![CDATA[<a href="{{election.country.link}}">{{election.country.name}}</a>]]>
+				</thecountry>
+				<thetype>
+					<![CDATA[{% if election.institution.name %}Election for {{election.institution.name}}{% else %}Referendum{% endif %}]]>
+				</thetype>
+				<thedate>
+					<![CDATA[{{election.date}}]]>
+				</thedate>
+				<title><![CDATA[{{election.country.name}} - {% if election.institution.name %}Election for {{election.institution.name}}{% else %}Referendum{% endif %}]]></title>
+			</item>
+		{% endfor %}
+	</channel>
+</rss>

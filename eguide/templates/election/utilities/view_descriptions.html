@@ -1,0 +1,26 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+
+
+        {% for item in elections %}
+            <strong>{{ item.id }}<br>
+            {{ item.name }}<br></strong><br>
+
+            {{ item.description|safe }}
+            <hr>
+        {% endfor %}
+
+
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}

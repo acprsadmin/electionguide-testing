@@ -1,0 +1,18 @@
+{% load humanize %}
+
+<h3><span>Results</span></h3>
+<section class="stats">
+    {% if election.participation %}
+    <section class="chart">
+        <div class="percentage">{{election.participation|floatformat:0}}<span>%</span></div>
+        <div class="title">Voter <br /> Turnout*</div>
+        <div id="donutchart" style="width: 170px; height: 170px"></div>
+    </section>
+    {% endif %}
+    <section class="text">
+        <div>Cast Votes:<span class="green">{{election.cast_votes|intcomma}}</span></div>
+        <div>Valid Votes:<span class="red">{{election.valid_votes|intcomma}}</span></div>
+        <div>Invalid Votes:<span class="blue">{{election.invalid_votes|intcomma}}</span></div>
+        <div><a href="#" data-title="Retrieved on  {{election.registered_voters_date}} {{election.registered_voters_source}}">Registered Voters:</a><span class="orange">{{election.registered_voters|intcomma}}</span></div>
+    </section>
+</section>

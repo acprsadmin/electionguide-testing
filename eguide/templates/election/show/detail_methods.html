@@ -1,0 +1,138 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+{% include "election/show/detail_header.html" %}
+
+
+<div class="float-right">
+<ul class="list-inline">
+  <li class="float-right"><a href="/edit_methods/{{ election.id }}/"  class="btn btn-sm btn-primary">Edit Voting Methods</a></li>
+  </ul>
+</div>
+<hr>
+
+<h3>Voting Methods</h3>
+
+
+<div class="subhead-row">In Person Voting 
+{% if election.inperson_voting_enabled %}
+ <span class="badge badge-primary"> ENABLED </span> 
+  {% endif %}
+ {% if election.primary_voting_method == 1 %}
+    <span class="badge badge-success"> Is Primary</span>
+ {% endif %}
+</div>
+
+ <div class="data-row">
+ Start: <strong>{{ election.inperson_voting_start|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  Time: <strong>{{ election.inperson_voting_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+
+ <div class="data-row">
+ End: <strong>{{ election.inperson_voting_end|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>   
+ Time: <strong>{{ election.inperson_voting_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Excuse Required: <strong>{{ election.yn_inperson_voting_excuse_required|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Instructions:<br>
+{{ election.inperson_voting_instructions|safe }}
+  </div>
+
+
+
+
+{% if election.early_voting_enabled %}
+
+  <div class="subhead-row-enabled">Early Voting           | ENABLED 
+    {% if election.primary_voting_method == 2 %} <strong>IS PRIMARY</strong> {% endif %}
+  </div>
+{% else %}
+  <div class="subhead-row">Early Voting  
+      {% if election.primary_voting_method == 2 %} <strong>IS PRIMARY</strong> {% endif %}
+    </div>
+ {% endif %}
+  <div class="data-row">
+ Start: <strong>{{ election.early_voting_start|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>  
+ Time: <strong>{{ election.early_voting_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+
+ <div class="data-row">
+ End: <strong>{{ election.early_voting_end|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>  
+ Time: <strong>{{ election.early_voting_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Excuse Required: <strong>{{ election.yn_early_voting_excuse_required|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Instructions:<br>
+{{ election.early_voting_instructions|safe }}
+  </div>
+
+
+
+
+{% if election.mail_voting_enabled %}
+
+  <div class="subhead-row-enabled">Mail Voting           | ENABLED 
+    {% if election.primary_voting_method == 3 %} <strong>IS PRIMARY</strong> {% endif %}
+  </div>
+{% else %}
+  <div class="subhead-row">In Person Voting  
+      {% if election.primary_voting_method == 3 %} <strong>IS PRIMARY</strong> {% endif %}
+    </div>
+ {% endif %}
+  <div class="data-row">
+ Start: <strong>{{ election.mail_voting_start|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>   Time: <strong>{{ election.mail_voting_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+
+ <div class="data-row">
+ End: <strong>{{ election.mail_voting_end|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>   Time: <strong>{{ election.mail_voting_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Excuse Required: <strong>{{ election.yn_mail_voting_excuse_required|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+Instructions:<br>
+{{ election.mail_voting_instructions|safe }}
+  </div>
+
+
+
+{% if election.online_voting_enabled %}
+  <div class="subhead-row-enabled">Online Voting ENABLED 
+    {% if election.primary_voting_method == 4 %} <strong>IS PRIMARY</strong> {% endif %}
+  </div>
+{% else %}
+  <div class="subhead-row">Online Voting  
+      {% if election.primary_voting_method == 4 %} <strong>IS PRIMARY</strong> {% endif %}
+    </div>
+ {% endif %}
+ <div class="data-row">
+ Start: <strong>{{ election.online_voting_start|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>  Time: <strong>{{ election.online_voting_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+
+ <div class="data-row">
+ End: <strong>{{ election.online_voting_end|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>  Time: <strong>{{ election.online_voting_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Excuse Required: <strong>{{ election.yn_online_voting_excuse_required|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+  </div>
+ <div class="data-row">
+ Instructions:<br>
+{{ election.online_voting_instructions|safe }}
+  </div>
+
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+{% include "election/mis_js.html" %}
+

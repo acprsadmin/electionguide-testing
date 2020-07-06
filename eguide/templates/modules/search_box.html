@@ -1,0 +1,30 @@
+	
+	
+	<!-- Search -->
+    <section class="box">
+        <h3><span>Search</span></h3>
+        <form action="/elections/" method="get" class="search">
+            <select name="inst" id="select-type">
+                <option value="" selected="selected">Type</option>
+                {% for item in institution_type %}
+                	<option value="{{item.name}}" >{{item.name}}</option>
+                {% endfor %}
+                	<option value="Referendum" >Referendum</option>
+            </select>
+            <select name="cont" id="select-country">
+                <option value="" selected="selected">Country</option>
+                {% for item in countries %}
+                	<option value="{{item.name}}" >{{item.name}}</option>
+                {% endfor %}
+            </select>
+            <select name="yr" id="select-year">
+                <option value="" selected="selected">Year</option>
+                <option value="">upcoming</option>
+                {% for item in years %}
+                	<option value="{{item}}" >{{item}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-danger btn-submit">Search</button>
+        </form>
+    </section>
+    <!-- /Search -->

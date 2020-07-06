@@ -1,0 +1,271 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+
+{% include "election/mis_css.html" %}
+ <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+{% include "election/eguide_banner.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+     <div class="col-6">
+  
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+    Add New Election to Eguide
+    </span>
+    </div>
+</div>
+
+<div class="container">
+
+
+<div class="form-container">
+{{ form.errors }}
+<form action="election/new/" method="post">{% csrf_token %}
+
+
+<input type="submit" value="Save" class="btn btn-primary pull-right" />
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.name.label_tag }} <i class="fas fa-asterisk greenie"></i></label>
+    <div class="col-sm-10">
+    {{ form.name.errors }}
+    {{ form.name }}
+      <em>{{ form.name.help_text }}</em>
+    </div>
+  </div>
+
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.country.label_tag }} <i class="fas fa-asterisk greenie"></i></label>
+    <div class="col-sm-10">
+    {{ form.country.errors }}
+    {{ form.country }}
+      <em>{{ form.country.help_text }}</em>
+    </div>
+  </div>
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.institution.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.institution.errors }}
+    {{ form.institution }}
+      <em>{{ form.institution.help_text }}</em>
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_scope.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.election_scope.errors }}
+    {{ form.election_scope}}
+      <em>{{ form.election_scope.help_text }}</em>
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_type.label_tag }} <i class="fas fa-asterisk greenie"></i></label>
+    <div class="col-sm-10">
+    {{ form.election_type.errors }}
+    {{ form.election_type}}
+      <em>{{ form.election_type.help_text }}</em>
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.election_status.label_tag }} <i class="fas fa-asterisk greenie"></i></label>
+    <div class="col-sm-10">
+    {{ form.election_status.errors }}
+    {{ form.election_status}}
+      <em>{{ form.election_status.help_text }}</em>
+    </div>
+  </div>
+
+
+
+
+
+<hr>
+ <strong>Electoral System</strong>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">System</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system.errors }}
+    {{ form.electoral_system}}
+      <em>{{ form.electoral_system.help_text }}</em>
+    </div>
+ 
+    <label class="col-sm-2 col-form-label">Other</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system_other.errors }}
+    {{ form.electoral_system_other}}
+      <em>{{ form.electoral_system_other.help_text }}</em>
+    </div>
+  </div>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Source</label>
+    <div class="col-sm-10">
+    {{ form.electoral_system_source.errors }}
+    {{ form.electoral_system_source}}
+      <em>{{ form.electoral_system_source.help_text }}</em>
+    </div>
+  </div>
+<hr>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.original_election_year.label_tag }} </label>
+    <div class="col-sm-10r">
+    {{ form.original_election_year.errors }}
+    {{ form.original_election_year }}
+ </div>
+
+  </div>
+ 
+  <div class="form-group row">
+
+    <div class="col-sm-1 checkboxer">
+    {{ form.is_national_exec }}
+    </div>
+    <label class="col-sm-6 col-form-label">{{ form.is_national_exec.label_tag }}</label>
+    <div class="col-sm-5 checkboxer">
+    {{ form.is_national_exec.errors }}
+    </div>
+
+<div class="col-sm-1 checkboxer">
+    {{ form.is_national_legislative }}
+    </div>
+    <label class="col-sm-6 col-form-label">{{ form.is_national_legislative.label_tag }}</label>
+    <div class="col-sm-5 checkboxer">
+    {{ form.is_national_legislative.errors }}
+    </div>
+
+<div class="col-sm-1 checkboxer">
+    {{ form.is_national_upper }}
+    </div>
+    <label class="col-sm-6 col-form-label">{{ form.is_national_upper.label_tag }}</label>
+    <div class="col-sm-5 checkboxer">
+    {{ form.is_national_upper.errors }}
+    </div>
+
+<div class="col-sm-1 checkboxer">
+    {{ form.is_national_lower }}
+    </div>
+    <label class="col-sm-6 col-form-label">{{ form.is_national_lower.label_tag }}</label>
+    <div class="col-sm-5 checkboxer">
+    {{ form.is_national_lower.errors }}
+    </div>
+ </div>
+
+<strong>Estimated Election Date Range</strong>
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Start</label>
+    <div class="col-sm-10">
+    {{ form.election_range_start_date.errors }}
+    {{ form.election_range_start_date }}
+      <em>{{ form.election_range_start_date.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">End</label>
+    <div class="col-sm-10">
+    {{ form.election_range_end_date.errors }}
+    {{ form.election_range_end_date }}
+      <em>{{ form.election_range_end_date.help_text }}</em>
+    </div>
+  </div>
+
+<strong>Declared Election Dates</strong>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Start</label>
+    <div class="col-sm-10">
+    {{ form.election_declared_start_date.errors }}
+    {{ form.election_declared_start_date }}
+      <em>{{ form.election_declared_start_date.help_text }}</em>
+    </div>
+  </div>
+
+   <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Time</label>
+    <div class="col-sm-10">
+    {{ form.election_declared_start_time.errors }}
+    {{ form.election_declared_start_time }}
+      <em>{{ form.election_declared_start_time.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">End</label>
+    <div class="col-sm-10">
+    {{ form.election_declared_end_date.errors }}
+    {{ form.election_declared_end_date }}
+      <em>{{ form.election_declared_end_date.help_text }}</em>
+    </div>
+  </div>
+
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Time</label>
+    <div class="col-sm-10">
+    {{ form.election_declared_end_time.errors }}
+    {{ form.election_declared_end_time }}
+      <em>{{ form.election_declared_end_time.help_text }}</em>
+    </div>
+  </div>
+
+
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Description <i class="fas fa-asterisk greenie"></i></label>
+    <div class="col-sm-10">
+    {{ form.description.errors }}
+    {{ form.description }}
+      <em>{{ form.description.help_text }}</em>
+    </div>
+  </div>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock content %}
+
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+ <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+
+
+  <script>
+      $('#id_election_range_start_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_range_end_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_declared_start_date').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_election_declared_end_date').datepicker({format: 'yyyy-mm-dd'});
+    
+     //$('#id_election_declared_start_time').timepicker();
+     //$('#id_election_declared_end_time').timepicker();
+    </script>

@@ -1,0 +1,11 @@
+
+
+
+
+        {% for item in provisions %}
+            <strong>election: {{ item.election_id }}<br>
+            provision:{{ item.id }}<br></strong><br>
+
+            {{ item.provision }}
+            <hr>
+        {% endfor %}

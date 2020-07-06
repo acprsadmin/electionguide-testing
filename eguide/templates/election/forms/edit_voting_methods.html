@@ -1,0 +1,342 @@
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+ <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+{% include "election/eguide_banner.html" %}
+
+
+ <!--<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />-->
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+-->
+
+{{ form.errors }}
+{% block content %}
+<div class="container">
+
+
+<div class="row">
+     <div class="col-6">
+    <span class="form-election">Election: {{ election.name }}</span> 
+    </div>
+     <div class="col-6">
+    <span class="form-title float-right">
+    Update Election Voting Methods
+    </span>
+    </div>
+</div>
+
+
+ <!-- Tab panes -->
+ <div class="form-container">
+
+  <input type="submit" value="Update Methods" class='btn btn-primary float-right' />
+
+   <form action="" method="post">{% csrf_token %}
+  {{ myform.media }}
+ 
+ 
+  <div id="voting-method-fields">    
+ 
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.primary_voting_method.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.primary_voting_method.errors }}
+    {{ form.primary_voting_method }}
+      <em>{{ form.primary_voting_method.help_text }}</em>
+    </div>
+  </div>
+<hr>
+ <span class="form-subhead">In Person Voting</span>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.inperson_voting_enabled.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.inperson_voting_enabled.errors }}
+    {{ form.inperson_voting_enabled }}
+      <em>{{ form.inperson_voting_enabled.help_text }}</em>
+    </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ form.inperson_voting_start.label_tag }}</label>
+      <div class="col-sm-4">
+       {{ form.inperson_voting_start.errors }}
+       {{ form.inperson_voting_start }}
+       <em>{{ form.inperson_voting_start.help_text }}</em>
+      </div>
+      <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+       {{ form.inperson_voting_start_time.errors }}
+       {{ form.inperson_voting_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.inperson_voting_start_time.help_text }}</em>
+   </div>
+</div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.inperson_voting_end.label_tag }}</label>
+    <div class="col-sm-4">
+       {{ form.inperson_voting_end.errors }}
+       {{ form.inperson_voting_end }}
+       <em>{{ form.inperson_voting_end.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.inperson_voting_end_time.errors }}
+       {{ form.inperson_voting_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.inperson_voting_end_time.help_text }}</em>
+   </div>
+</div>
+
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.inperson_voting_instructions.label_tag }}</label>
+    <div class="col-sm-10 ">
+    {{ form.inperson_voting_instructions.errors }}
+    {{ form.inperson_voting_instructions }}
+      <em>{{ form.inperson_voting_instructions.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-4 col-form-label">{{ form.yn_inperson_voting_excuse_required.label_tag }}</label>
+    <div class="col-sm-8">
+    {{ form.yn_inperson_voting_excuse_required.errors }}
+    {{ form.yn_inperson_voting_excuse_required }}
+      <em>{{ form.yn_inperson_voting_excuse_required.help_text }}</em>
+    </div>
+  </div>
+
+<hr>
+<span class="form-subhead">Early Voting</span>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.early_voting_enabled.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.early_voting_enabled.errors }}
+    {{ form.early_voting_enabled }}
+      <em>{{ form.early_voting_enabled.help_text }}</em>
+    </div>
+  </div>
+
+
+ <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ form.early_voting_start.label_tag }}</label>
+      <div class="col-sm-4">
+       {{ form.early_voting_start.errors }}
+       {{ form.early_voting_start }}
+       <em>{{ form.early_voting_start.help_text }}</em>
+      </div>
+      <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+       {{ form.early_voting_start_time.errors }}
+       {{ form.early_voting_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.early_voting_start_time.help_text }}</em>
+   </div>
+</div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.early_voting_end.label_tag }}</label>
+    <div class="col-sm-4">
+       {{ form.early_voting_end.errors }}
+       {{ form.early_voting_end }}
+       <em>{{ form.early_voting_end.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.early_voting_end_time.errors }}
+       {{ form.early_voting_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.early_voting_end_time.help_text }}</em>
+   </div>
+</div>
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.early_voting_instructions.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.early_voting_instructions.errors }}
+    {{ form.early_voting_instructions }}
+      <em>{{ form.early_voting_instructions.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_early_voting_excuse_required.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_early_voting_excuse_required.errors }}
+    {{ form.yn_early_voting_excuse_required }}
+      <em>{{ form.yn_early_voting_excuse_required.help_text }}</em>
+    </div>
+  </div>
+
+
+<hr>
+<span class="form-subhead">Mail-In Voting</span>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.mail_voting_enabled.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.mail_voting_enabled.errors }}
+    {{ form.mail_voting_enabled }}
+      <em>{{ form.mail_voting_enabled.help_text }}</em>
+    </div>
+  </div>
+
+
+
+ <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ form.mail_voting_start.label_tag }}</label>
+      <div class="col-sm-4">
+       {{ form.mail_voting_start.errors }}
+       {{ form.mail_voting_start }}
+       <em>{{ form.mail_voting_start.help_text }}</em>
+      </div>
+      <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+       {{ form.mail_voting_start_time.errors }}
+       {{ form.mail_voting_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.mail_voting_start_time.help_text }}</em>
+   </div>
+</div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.mail_voting_end.label_tag }}</label>
+    <div class="col-sm-4">
+       {{ form.mail_voting_end.errors }}
+       {{ form.mail_voting_end }}
+       <em>{{ form.mail_voting_end.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.mail_voting_end_time.errors }}
+       {{ form.mail_voting_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.mail_voting_end_time.help_text }}</em>
+   </div>
+</div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.mail_voting_instructions.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.mail_voting_instructions.errors }}
+    {{ form.mail_voting_instructions }}
+      <em>{{ form.mail_voting_instructions.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_mail_voting_excuse_required.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_mail_voting_excuse_required.errors }}
+    {{ form.yn_mail_voting_excuse_required }}
+      <em>{{ form.yn_mail_voting_excuse_required.help_text }}</em>
+    </div>
+  </div>
+
+<hr>
+<span class="form-subhead">Online Voting</span>
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.online_voting_enabled.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.online_voting_enabled.errors }}
+    {{ form.online_voting_enabled }}
+      <em>{{ form.online_voting_enabled.help_text }}</em>
+    </div>
+  </div>
+
+ 
+ <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ form.online_voting_start.label_tag }}</label>
+      <div class="col-sm-4">
+       {{ form.online_voting_start.errors }}
+       {{ form.online_voting_start }}
+       <em>{{ form.online_voting_start.help_text }}</em>
+      </div>
+      <label class="col-sm-2 col-form-label">Start Time</label>
+    <div class="col-sm-2">
+       {{ form.online_voting_start_time.errors }}
+       {{ form.online_voting_start_time }}
+    </div>
+    <div class="col-sm-2">
+      <em>{{ form.online_voting_start_time.help_text }}</em>
+   </div>
+</div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.online_voting_end.label_tag }}</label>
+    <div class="col-sm-4">
+       {{ form.online_voting_end.errors }}
+       {{ form.online_voting_end }}
+       <em>{{ form.online_voting_end.help_text }}</em>
+    </div>
+  <label class="col-sm-2 col-form-label">End Time</label>
+    <div class="col-sm-2">
+       {{ form.online_voting_end_time.errors }}
+       {{ form.online_voting_end_time }}
+     </div>
+     <div class="col-sm-2">
+      <em>{{ form.online_voting_end_time.help_text }}</em>
+   </div>
+</div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.online_voting_instructions.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.online_voting_instructions.errors }}
+    {{ form.online_voting_instructions }}
+      <em>{{ form.online_voting_instructions.help_text }}</em>
+    </div>
+  </div>
+
+ <div class="form-group row">
+    <label class="col-sm-2 col-form-label">{{ form.yn_online_voting_excuse_required.label_tag }}</label>
+    <div class="col-sm-10">
+    {{ form.yn_online_voting_excuse_required.errors }}
+    {{ form.yn_online_voting_excuse_required }}
+      <em>{{ form.yn_online_voting_excuse_required.help_text }}</em>
+    </div>
+  </div>
+
+</div>
+      
+  
+
+    <input type="submit" value="Update Methods" class='btn btn-primary' />
+</form>
+
+
+</div>
+</div>
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+ <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+
+  <script>
+      $('#id_inperson_voting_start').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_inperson_voting_end').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_early_voting_start').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_early_voting_end').datepicker({format: 'yyyy-mm-dd'});
+      $('#id_mail_voting_start').datepicker({format: 'yyyy-mm-dd'}); 
+      $('#id_mail_voting_end').datepicker({format: 'yyyy-mm-dd'}); 
+      $('#id_online_voting_start').datepicker({format: 'yyyy-mm-dd'}); 
+      $('#id_online_voting_end').datepicker({format: 'yyyy-mm-dd'}); 
+
+     //$('#id_inperson_voting_start_time').timepicker();
+     //$('#id_inperson_voting_end_time').timepicker();
+  </script>

@@ -1,0 +1,136 @@
+[
+ 
+  {
+    "model": "eguide.electoral_system",
+    "pk": 1,
+    "fields": {
+      "name": "FPTP",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 2,
+    "fields": {
+      "name": "Alternative Vote",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 3,
+    "fields": {
+      "name": "Block Vote",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 4,
+    "fields": {
+      "name": "Two-Round System",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 5,
+    "fields": {
+      "name": "Parallel",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 6,
+    "fields": {
+      "name": "Single Non-Transferable Vote",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 7,
+    "fields": {
+      "name": "Proportional Representation",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 8,
+    "fields": {
+      "name": "Mixed Member Representation",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 9,
+    "fields": {
+      "name": "Single Transferable Vote",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+   {
+    "model": "eguide.electoral_system",
+    "pk": 10,
+    "fields": {
+      "name": "Other",
+      "active": 1,
+      "date_created": "2020-03-03",
+      "date_updated": "2020-03-03"
+    }
+  },
+
+ {
+    "model": "eguide.election_scope",
+    "pk": 1,
+    "fields": {
+      "active": 1,
+      "date_created":"2020-03-03",
+      "date_updated":"2020-03-03",      
+      "name": "General"
+    }
+  },
+
+ {
+    "model": "eguide.election_scope",
+    "pk": 2,
+    "fields": {
+      "active": 1,
+      "date_created":"2020-03-03",
+      "date_updated":"2020-03-03",      
+      "name": "Primary"
+    }
+  },
+
+ {
+    "model": "eguide.election_scope",
+    "pk": 3,
+    "fields": {
+      "active": 1,
+      "date_created":"2020-03-03",
+      "date_updated":"2020-03-03",      
+      "name": "Runoff"
+    }
+  }
+]

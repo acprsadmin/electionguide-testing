@@ -1,0 +1,247 @@
+
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% include "election/mis_css.html" %}
+
+{% include "election/eguide_banner.html" %}
+{% block content %}
+
+{% include "election/show/detail_header.html" %}
+
+
+
+<div class="float-right">
+<ul class="list-inline">
+  <li class="float-right"><a href="/edit_general/{{ election.id }}/"  class="btn btn-sm btn-primary">Edit</a></li>  
+  </ul>
+</div>
+<hr>
+
+<h3>General Election Info</h3>
+
+
+<div class="row">
+
+
+
+  <div class="col-md">
+
+
+  <div class="subhead-row">Basic</div>
+  <div class="data-row">
+   Election Scope:  <strong>{{ election.election_scope|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+  </div>
+  <div class="data-row">
+   Election Levels:  
+    <strong>   {% if election.is_national_exec %}
+           NATIONAL_EXEC &nbsp; &nbsp;
+         {% endif %}
+       
+        {% if election.is_national_legislative %}
+            NATIONAL_LEGISLATIVE  &nbsp; &nbsp;
+        {% endif %}
+        {% if election.is_national_upper %}
+            NATIONAL_UPPER  &nbsp; &nbsp;
+              {% endif %}
+        {% if election.is_national_lower %}
+            NATIONAL_LOWER  &nbsp; &nbsp;
+          {% endif %}
+      </strong> 
+  </div>
+
+<div class="data-row">
+    Institution:  <strong>{{ election.institution }}</strong>
+</div>
+<div class="data-row">
+    Election Type:  <strong>{{ election.election_type|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>"  }}</strong>
+</div>
+<div class="data-row">
+    Election Scope:  <strong>{{ election.election_scope|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+</div>
+<div class="data-row">
+    Electoral System:  <strong>{{ election.electoral_system|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>"  }}</strong><br>
+       Electoral System (other): <strong>{{ election.electoral_system_other }}</strong> 
+</div>
+<div class="data-row">
+   Voting Age Minimum: <strong>{{ election.voting_age_minimum|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+      <span class="source">Source: <strong>{{ election.voting_age_minimum_source }}</strong></span>
+
+</div>
+<div class="data-row">
+   Administering Commission Website: <strong>{{ election.administering_election_commission_website|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+</div>
+<div class="data-row">
+   Election Website: <strong>{{ election.source_website|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }} </strong>
+</div>
+
+
+  <div class="subhead-row">Status</div>
+
+<div class="data-row">
+   Status: <strong>{{  election.election_status }}</strong> 
+</div>
+<div class="data-row">
+   COVID-19 Effected: <strong>{{  election.is_delayed_covid19 }}</strong> 
+</div>
+<div class="data-row">
+   Expected (Original) Election Year: <strong>{{  election.original_election_year|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+</div>
+<div class="data-row">
+   Election Date [Deprecated]:  <strong>{{  election.date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+</div>
+<div class="data-row">
+   Range Date:  Start: <strong>{{  election.election_range_start_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+    End: <strong>{{ election.election_range_end_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+    <span class="details">Details:</span> {{ election.election_range_notes }} <br>
+    <span class="source">Source:</span> {{ election.election_range_source }}
+</div>
+
+<div class="data-row">
+Declared Start Date: <strong>{{  election.election_declared_start_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+Time: <strong>{{  election.election_declared_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+Declared End Date <strong>{{  election.election_declared_end_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>"  }}</strong>
+Time: <strong>{{  election.election_declared_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+<span class="source">Source:</span> {{ election.election_declared_source }} 
+</div>
+
+<div class="data-row">
+Blackout Date Start: <strong>{{  election.election_blackout_start_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+Time: <strong>{{  election.election_blackout_start_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+Blackout End Date: <strong>{{  election.election_blackout_start_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+Time: <strong>{{  election.election_blackeout_end_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong><br>
+<span class="source">Source:</span> {{ election.election_blackout_source }}
+</div>
+
+<div class="data-row">
+Voter Registration Deadline Date: <strong>{{ election.voter_registration_deadline|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+Time {{election.voter_registration_deadline_time|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}
+
+</div>
+<div class="data-row">
+Candidate Filing Deadline Date: <strong>{{ election.election_candidate_filing_deadline }}</strong>
+Candidate Filing Deadline Time {{ election.election_candidate_filing_deadlinez_time }}<br>
+<span class="source">Source:</span>{{ election.election_candidate_filing_deadline_source }}
+</div>
+
+<div class="data-row">
+
+</div>
+<div class="data-row">
+
+</div>
+
+  
+<div class="data-row">
+Elected Female Leaders: <strong>{{ election.female_elected }}</strong><br>
+      <small>parliament members, presidents, members of the assembly</small>
+</div>
+
+
+    
+
+</div>
+<div class="col-md">
+<div class="subhead-row">Description</div>
+ 
+   
+
+<div class="data-row">
+{{ election.description|safe }}
+</div>
+
+ <div class="subhead-row">Ballot Description</div>    
+ 
+<div class="data-row">
+{{ election.ballot_description}}
+      <hr>
+      File: {{ election.ballot_file}}
+</div>
+
+
+ <div class="subhead-row">Registered Voters</div>    
+<div class="data-row">
+Data Date: <strong>{{ election.registered_voters_date|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+
+</div>
+<div class="data-row">
+ Registered Voters Total: <strong>{{ election.registered_voters|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong> 
+
+</div>
+<div class="data-row">
+ Registered Voters Female: <strong>{{ election.registered_voters_female|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+
+</div>
+<div class="data-row">
+ Registered Voters Male: <strong>{{ election.registered_voters_male|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+
+</div>
+<div class="data-row">
+ <span class="source">Source:</span> {{ election.registered_voters_source }}<br>
+
+</div>
+
+
+
+
+   <div class="subhead-row">Cast Votes</div>    
+<div class="data-row">
+Total Cast Votes: <strong>{{ election.cast_votes|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+</div>
+<div class="data-row">
+Valid Votes <strong>{{ election.valid_votes|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+</div>
+<div class="data-row">
+Invalid Votes <strong>{{ election.invalid_votes|default:"<span class='defaultnone'>&nbsp;&nbsp;</span>" }}</strong>
+</div>
+
+
+
+
+ </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+{% include "election/eguide_footer.html" %}
+
+{% include "election/mis_js.html" %}
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  $('.cv-delete').click(function() {
+    var cv_id = $(this).data('cv-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/candidate/delete/' + cv_id + '/');
+    }
+});
+ $('.pv-delete').click(function() {
+    var pv_id = $(this).data('pv-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/partyvote/delete/' + pv_id + '/');
+    }
+});
+ $('.rf-delete').click(function() {
+    var rf_id = $(this).data('rf-id');
+    if (confirm("Do you want to delete this record?")) {
+      location.assign('/provision/delete/' + rf_id + '/');
+    }
+
+});
+
+
+  
+
+</script>
+

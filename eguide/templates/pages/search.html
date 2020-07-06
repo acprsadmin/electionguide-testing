@@ -1,0 +1,81 @@
+{% extends 'base/section.html' %}
+{% load staticfiles %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}	
+	{{block.super}}
+	{% breadcrumb "Search Results" "search" %}
+{% endblock breadcrumbs %}	
+
+{% block content%}
+
+	
+	<!-- Voter Turnout -->
+    <section class="box list-box">
+        
+        <style type="text/css">
+        	.my_class {
+        		font-size:12px;
+        	}
+        </style>
+        
+        <!-- Table -->
+        <table class="table table-striped" id="datagrid">
+            <thead>
+                <tr>
+                    <th style="width: 45px; font-size: 14px;"></th>
+                    <th style="font-size: 14px;">Country</th>
+                    <th style="width: 500px; font-size: 14px;">Election for</th>
+                    <th style="font-size: 14px;">Date</th>
+                    <th style="font-size: 14px;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>                   
+        </table>
+        <!-- /Table -->
+
+
+    </section>
+    <!-- /Voter Turnout -->
+	
+{% endblock content%}
+
+{% block extra_js %}
+
+	
+	<script src="{% static "ifes/js/jquery.dataTables.min.js" %}"></script>
+    <script>
+        $('#datagrid').dataTable({
+	        "aaSorting": [[ 3, "desc" ]],
+	        "sPaginationType": "full_numbers",
+	        "aLengthMenu": [10, 30, 50, 100, 200, 300],
+	        "iDisplayLength": 30,
+	        "bPaginate": true,
+	        "bProcessing": true,
+	        "bServerSide": true,
+	        "sAjaxSource":  '{% url "dt-election" %}',
+	        "aoColumns": [
+	          { "bSortable": false, "sClass": "my_class", 
+		      "mRender": function ( data, type, full ) {
+		           return '<img src="'+data+'" width="30">';
+		      	}},
+		      { "sClass": "my_class" },
+		      { "bSortable": false, 
+		      	"mRender": function ( data, type, full ) {
+		           if(data[0]==null)
+		           {
+		           		return '<a href="'+data[1]+'">Referendum</a>';
+		           }
+		           else
+		           {
+		           		return '<a href="'+data[1]+'">'+data[0]+'</a>';
+		           	}
+		         }},
+		      { "asSorting": [ "desc", "asc" ], "sClass": "my_class" },
+		      { "sClass": "my_class" }
+		    ]});
+        $('.dataTables_filter input').attr("placeholder", "Search Elections...");
+    </script>
+{% endblock extra_js %}

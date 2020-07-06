@@ -1,0 +1,134 @@
+{% extends 'election/browse.html' %}
+{% load humanize %}
+{% load staticfiles %}
+{% load eguide_extra %}
+{% load breadcrumb_tags %}
+{% load admin_urls %}
+
+
+{% block breadcrumbs %}
+	{{block.super}}
+	{% breadcrumb election.country.name "country" election.country.id %}
+	{% if election.institution %}
+		{% with "Election for "|add:election.institution.name as electionname %}
+			{% breadcrumb electionname "election" %}
+		{% endwith %}
+	{% else %}
+		{% breadcrumb "Referendum" "election" %}
+	{% endif %}
+
+{% endblock breadcrumbs %}
+
+{% block title%} | Elections: {{election.name}}{% endblock%}
+
+
+{% block content%}
+
+			<!-- Election Details -->
+                <section class="box election-country">
+                    <h3>
+                    	<span>{{election.date}}</span>
+                    	<em>
+                    		{{election.election_status.name}}
+                    		{% if user.is_staff %}
+                    		{% endif %}</em>
+                   	</h3>
+                    <section class="flagship">
+                        {% if election.registered_voters > 0 %}
+                        <section class="count">
+                        	{% if election.cast_votes > 0 %}
+                            <div class="number">{{election.cast_votes|intcomma}}</div>
+                            <div class="title">Voted</div>
+                            {% else %}
+                            <div class="number">{{election.registered_voters|intcomma}}</div>
+                            <div class="title">Registered to Vote</div>
+                            {% endif %}
+                        </section>
+                        {% endif %}
+                        <section class="flag">
+                            <img src="{% if election.country.flag %}{{election.country.flag.url}}{% else %}{% static "eguide/img/flags/noflag.png" %}{% endif %}" alt="{{ election.country.name}}" height="64" width="64">
+                            <div class="titles">
+                                <h3><a href="{% url 'country' election.country.id %}">{{election.country.official_name}}</a></h3>
+                                <h5>
+                                	{% if election.institution.foriegn_name %}
+                                		Election for {{election.institution.foriegn_name}} ({{election.institution.name}})
+                                	{% elif election.institution.name %}
+                                		Election for {{election.institution.name}}
+                                	{% else %}
+                                		Referendum
+                                	{% endif %}
+                                </h5>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+                <!-- /Election Details -->
+                {% if election.show_results and election.cast_votes > 0 %}
+                <!-- Results -->
+                <section class="box election-results">
+					{% include "modules/election_results_turnout_section.html" %}
+                    {% election_results election.id %}
+                    <!-- <section class="system">
+                        <hr>
+                        <span>Electorial System:</span> Block Vote
+                    </section>  -->
+                </section>
+                <!-- /Results -->
+                {% endif %}
+
+                {% if election.show_seat_shares and parliamentary_type %}
+	                <!-- Share -->
+	                <section class="box seat-shares">
+	                    <h3><span>Seat Shares:</span></h3>
+	                    <div id="chart_div" style="width: 580px; height: 400px;"></div>
+	                </section>
+	                <!-- /Share -->
+                {% endif %}
+
+				{% include "modules/election_description.html" %}
+
+{% endblock content%}
+
+
+{% block sidebar_top %}
+
+	{% related_election election.country.id %}
+
+{% endblock sidebar_top %}
+
+{% block extra_js %}
+
+ 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+ 	{% if election.participation %}
+ 	<!-- Chart -->
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Type', 'Count'],
+          ['Valid Votes', {{election.valid_votes}}],
+          ['Not Participated', {{election.not_voted}}],
+        ]);
+
+        var options = {
+          pieHole        : 0.65,
+          legend         : {position: 'none'},
+          colors         : ['#2980B9', '#E74C3C'],
+          chartArea      : {left:10,top:10,width:"90%",height:"90%"},
+          pieSliceText   : 'none',
+          backgroundColor: 'transparent'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+    <!-- /Chart -->
+    {% endif %}
+
+    {% if election.show_seat_shares and parliamentary_type%}
+    	{% party_seats election.id %}
+    {% endif %}
+{% endblock extra_js %}

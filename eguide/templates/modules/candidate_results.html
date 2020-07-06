@@ -1,0 +1,13 @@
+{% if candidate_list %}
+<h3><span>Candidates:</span></h3>
+<section class="bars">
+    {% for item in results %}
+    <div>
+        <p>{{item.candidate.name}} {{item.candidate.lastname}}<span>{{item.votes}}</span></p>
+        <div class="progress">
+            <div class="bar" style="width:{{item.percentage}}%">{{item.percentage}}</div>
+        </div>
+    </div>
+    {% endfor %} 
+</section>
+{% endif %}

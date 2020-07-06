@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title%} | Map{% endblock%}
+
+{% block full_page %}
+	<!-- Main Content -->
+	    <section class="span12 content">
+	        
+	        <!-- Upcoming Elections -->
+	        <section class="box upcoming">
+	            <h3><span>Upcoming Elections</span></h3>
+	            
+	            <style type="text/css">
+	            	#map-container2 {
+	            		height: 512px;
+	            		width: 900px;
+	            	}
+
+	            </style>
+	            
+	            <div id="map-container2">
+	                <div id="map" style="height: 512px;"></div>
+	            </div>
+	            
+	            <h3></h3>
+		        
+		        <ul class="big-list" style="float: left; width: 300px">
+		            {% for item in election|slice:":3" %}
+		            <li>
+		                <div class="date">{{item.date|date:"d"}}<span class="month">{{item.date|date:"M"}}</span></div>
+		                <a href="{% url 'election' item.id %}">{{item.country.name}}</a>
+		                <h5>{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</h5>
+		            </li>
+		            {% endfor %}
+		        </ul>
+		        <ul class="big-list" style="float: left; width:300px;">
+		            {% for item in election|slice:"3:6" %}
+		            <li>
+		                <div class="date">{{item.date|date:"d"}}<span class="month">{{item.date|date:"M"}}</span></div>
+		                <a href="{% url 'election' item.id %}">{{item.country.name}}</a>
+		                <h5>{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</h5>
+		            </li>
+		            {% endfor %}
+		        </ul>
+		        <ul class="big-list" style="float: left; width:300px;">
+		            {% for item in election|slice:"6:9" %}
+		            <li>
+		                <div class="date">{{item.date|date:"d"}}<span class="month">{{item.date|date:"M"}}</span></div>
+		                <a href="{% url 'election' item.id %}">{{item.country.name}}</a>
+		                <h5>{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</h5>
+		            </li>
+		            {% endfor %}
+		        </ul>
+		        <br clear="all">
+	            
+	        </section>
+	        <!-- /Upcoming Elections -->
+	    </section>
+	    <!-- /Main Content -->
+
+{% endblock full_page %}
+
+{% block extra_js %}
+
+<script src="{% static "eguide/js/datamaps.all.min.js" %}"></script>
+<script type="text/javascript">
+	{% include 'base/map.js' %}
+</script>
+
+{% endblock extra_js %}

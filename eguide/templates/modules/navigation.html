@@ -1,0 +1,39 @@
+{% load eguide_extra %}
+
+<section class="main-nav">
+    <section class="container">
+        <nav class="navbar navbar-inverse">
+            <section class="navbar-inner">
+                <ul id="menu" class="nav">
+                    <li class="{% active path '^/$' %}"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="{% active path '^/elections/' %}"><a href="{% url 'elections-type' 'upcoming'%} ">Elections</a>
+                    	<ul>
+                            <li><a href="{% url 'elections-type' 'upcoming' %}">Upcoming</a></li>
+                            <li><a href="{% url 'elections-type' 'past' %}">Past</a></li>
+                        </ul>
+                    </li>
+                    <li class="{% active path '^/countries/' %}"><a href="{% url 'countries' %}">Countries</a></li>
+                    <li class="{% active path '^/digest/' %}"><a href="{% url 'digest' %}">Digest</a>
+                    	<ul>
+                            {% for item in categories %}
+                            <li><a href="{% url 'digest-category' item.slug %}">{{item.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="{% active path '^/map/' %}"><a href="{% url 'map'%}">Map</a></li>
+                    {# <li class="{% active path '^/reports/' %}"><a href="/reports">Reports</a></li> #}
+                    <li class="{% active path '^/about/' %}"><a href="{% url 'page' 'about'%}">About</a></li>
+                    <li class="{% active path '^/myeguide/' %}"><a href="{% url 'myeguide'%}">My EGUIDE</a></li>
+                   
+                    {% if isDataEntry %}
+                      <li class="{% active path '^/allelections/' %}"><a href="{% url 'allelections'%}">Manage</a></li>
+                    {% endif %}
+
+                </ul>
+            </section>
+        </nav>
+
+
+
+    </section>
+</section>

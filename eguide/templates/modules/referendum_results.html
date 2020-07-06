@@ -1,0 +1,16 @@
+{% if referendum_list %}
+<h3><span>Provisions</span></h3>
+<section class="bars">
+    {% for provision in results %}
+    <p>{{provision.provision}}</p>
+    	{% for item in provision.choices %}
+		    <div>
+		        <p>{{item.name}}<span>{{item.votes}}</span></p>
+		        <div class="progress">
+		            <div class="bar" style="width:{{item.percentage}}%">{{item.percentage}}</div>
+		        </div>
+		    </div>
+		{% endfor %}    
+    {% endfor %} 
+</section>
+{% endif %}

@@ -1,0 +1,139 @@
+{% extends 'base/section.html' %}
+{% load staticfiles %}
+{% load breadcrumb_tags %}
+
+{% block breadcrumbs %}
+	{{block.super}}
+	{% breadcrumb "Elections" "elections" %}
+{% endblock breadcrumbs %}
+
+{% block title%} | Elections{% endblock%}
+
+{% block content%}
+
+	{#{% render_table table %}#}
+
+	<!-- Voter Turnout -->
+                <section class="box list-box">
+
+                    <style type="text/css">
+                    	.my_class {
+                    		font-size:12px;
+                    	}
+                    </style>
+                   
+
+
+{% if isDataEntry %}
+<a href="{% url 'allelections' %}" class="btn btn-sm btn-success">Election Management</a>
+{% endif %}                
+
+                    <!-- Table -->
+                    <table class="table table-striped" id="datagrid">
+                        <thead>
+                            <tr>
+                                <th style="width: 32px; font-size: 14px;"></th>
+                                <th style="width:75px;font-size: 14px;">Country</th>
+                                <th style="width: 270px; font-size: 14px;">Election for</th>
+                                <th style="width:64px; 14px;">Date</th>
+                                <th style="font-size: 14px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%if type %}
+	                            {% for item in elections %}
+	                            <tr>
+	                                <td><img src="{% if item.country.flag %}{{item.country.flag.url}}{% else %}{% static "eguide/img/flags/noflag.png" %}{% endif %}" style="width:30px;"></td>
+	                                <td><a href="{% url 'country' item.country.id %}">{{item.country.name}}</a></td>
+	                                <td><a href="{% url 'election' item.id %}">{%if item.institution.name %}{{item.institution.name}}{% else %}Referendum{% endif %}</a></td>
+	                                <td>{{item.date|date:"Y-m-d"}}</td>
+	                                <td>{{item.election_status.name}}</td>
+	                            </tr>
+	                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <!-- /Table -->
+
+
+                </section>
+                <!-- /Voter Turnout -->
+
+{% endblock content%}
+
+{% block extra_js %}
+
+
+	<script src="{% static "eguide/js/jquery.dataTables.min.js" %}"></script>
+    <script>
+        $('#datagrid').dataTable({
+	        {% if type == 'upcoming' %}
+	        	"aaSorting": [[ 3, "asc" ]],
+	        {% else %}
+	        	"aaSorting": [[ 3, "desc" ]],
+	        {% endif %}
+
+	        "sPaginationType": "full_numbers",
+	        "aLengthMenu": [10, 30, 50, 100, 200, 300],
+	        "iDisplayLength": 30,
+	        "bPaginate": true,
+	        "bProcessing": true,
+	        "bServerSide": true,
+	        "sDom": '<"top"lfip>rt<"bottom"ip<"clear">',
+	        {% if type and not query %}
+	        	"iDeferLoading": {{count}},
+	        	"bDeferRender": true,
+	        {% endif %}
+	        {% if query %}
+	        	"oSearch": {"sSearch": "{{query}}"},
+	        {% endif %}
+	        {% if type %}
+	        	"sAjaxSource":  '{% url "dt-election" %}{{type}}/',
+	        {% else %}
+	        	"sAjaxSource":  '{% url "dt-election" %}',
+	        {% endif %}
+	        "aoColumns": [
+	          { "bSortable": false, "sClass": "my_class",
+		      "mRender": function ( data, type, full ) {
+	           	if(data.match(/<img/g))
+	           	{
+	           		return data;
+	           	}
+	           	else
+	           	{
+	           		return '<img src="'+data+'" style="width:30px;">';
+	           	}
+		      	}},
+		      { "sClass": "my_class",
+		      	"mRender": function ( data, type, full ) {
+		           	try {
+			           	if(data.match(/href/g))
+			           		return data;
+			        } catch (err) {
+			        	return '<a href="'+data[1]+'">'+data[0]+'</a>';
+			        }
+		         }},
+		      { "bSortable": false,
+		      	"mRender": function ( data, type, full ) {
+		           try {
+			           	if(data.match(/href/g))
+			           		return data;
+			        } catch (err) {
+			        	if(data[0]==null)
+			            {
+			           		return '<a href="'+data[1]+'">Referendum</a>';
+			            }
+			            else
+			            {
+			           		return '<a href="'+data[1]+'">'+data[0]+'</a>';
+			           	}
+			        }
+
+
+		         }},
+		      { "asSorting": [ "desc", "asc" ], "sClass": "my_class" },
+		      { "sClass": "my_class" }
+		    ]});
+        $('.dataTables_filter input').attr("placeholder", "Search Elections...");
+    </script>
+{% endblock extra_js %}
